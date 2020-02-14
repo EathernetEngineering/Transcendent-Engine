@@ -12,6 +12,7 @@
 **.dll
 **.exe
 !Slue/vendor/Premake/premake5.exe
+**.pch
 **.o
 **.obj
 **.lib
