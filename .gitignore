@@ -11,7 +11,7 @@
 ################
 **.dll
 **.exe
-!Slue/vendor/Premake/premake5.exe
+!Transcendent-Engine/vendor/Premake/premake5.exe
 **.pch
 **.o
 **.obj
