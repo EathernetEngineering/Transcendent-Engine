@@ -1,3 +1,6 @@
 [submodule "Slue/vendor/glfw"]
 	path = Slue/vendor/glfw
 	url = https://github.com/glfw/glfw
+[submodule "Slue/vendor/glew"]
+	path = Slue/vendor/glew
+	url = https://github.com/nigels-com/glew
