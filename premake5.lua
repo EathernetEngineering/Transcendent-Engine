@@ -17,12 +17,12 @@ workspace "Slue"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["GLFW"] = "Slue/vendor/GLFW/include"
-IncludeDir["GLEW"] = "Slue/vendor/GLEW/include"
+IncludeDir["GLFW"] = "Slue/vendor/glfw/include"
+IncludeDir["GLAD"] = "Slue/vendor/glad/include"
 
 group "Dependencies"
-	include "Slue/vendor/GLFW"
-	include "Slue/vendor/GLEW"
+	include "Slue/vendor/glfw"
+	include "Slue/vendor/glad"
 
 group ""
 
@@ -51,11 +51,13 @@ project "Slue"
 	{
 		"%{prj.name}/src",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.GLEW}"
+		"%{IncludeDir.GLAD}"
 	}
 
 	links
 	{
+		"GLFW",
+		"GLAD",
 		"opengl32.lib"
 	}
 

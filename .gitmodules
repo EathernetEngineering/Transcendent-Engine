@@ -1,0 +1,3 @@
+[submodule "Slue/vendor/glfw"]
+	path = Slue/vendor/glfw
+	url = https://github.com/TheCherno/glfw
