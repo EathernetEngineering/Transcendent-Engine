@@ -38,6 +38,7 @@ project "Transcendent-Engine"
 
 	files
 	{
+		"%{prj.name}/include/Transcendent-Engine.h",
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp"
 	}
@@ -50,6 +51,7 @@ project "Transcendent-Engine"
 	includedirs
 	{
 		"%{prj.name}/src",
+		"%{prj.name}/src/Transcendent-Engine",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}"
 	}
@@ -84,6 +86,7 @@ project "Transcendent-Engine"
 		runtime "Release"
 		optimize "on"
 
+		
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
@@ -103,6 +106,7 @@ project "Sandbox"
 	includedirs
 	{
 		"Transcendent-Engine/src",
+		"Transcendent-Engine/src/Transcendent-Engine",
 		"Transcendent-Engine/vendor"
 	}
 

@@ -1,5 +1,15 @@
+#include "../include/Transcendent-Engine.h"
 
+class Sandbox : public TE::Application
+{
+public:
+	void run() override;
+};
 
-int main(int argc, char** argv) {
-	return 0;
+TE::Application* TE::createApplication() {
+	return new Sandbox;
+}
+
+void Sandbox::run() {
+	while (true);
 }
