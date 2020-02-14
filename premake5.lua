@@ -1,4 +1,4 @@
-workspace "Slue"
+workspace "Transcendent-Engine"
 	architecture "x86_64"
 	startproject "Sandbox"
 
@@ -17,17 +17,17 @@ workspace "Slue"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
-IncludeDir["GLFW"] = "Slue/vendor/glfw/include"
-IncludeDir["GLAD"] = "Slue/vendor/glad/include"
+IncludeDir["GLFW"] = "Transcendent-Engine/vendor/glfw/include"
+IncludeDir["GLAD"] = "Transcendent-Engine/vendor/glad/include"
 
 group "Dependencies"
-	include "Slue/vendor/glfw"
-	include "Slue/vendor/glad"
+	include "Transcendent-Engine/vendor/glfw"
+	include "Transcendent-Engine/vendor/glad"
 
 group ""
 
-project "Slue"
-	location "Slue"
+project "Transcendent-Engine"
+	location "Transcendent-Engine"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
@@ -102,13 +102,13 @@ project "Sandbox"
 
 	includedirs
 	{
-		"Slue/src",
-		"Slue/vendor"
+		"Transcendent-Engine/src",
+		"Transcendent-Engine/vendor"
 	}
 
 	links
 	{
-		"Slue"
+		"Transcendent-Engine"
 	}
 
 	filter "system:windows"
