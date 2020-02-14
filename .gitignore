@@ -1,6 +1,17 @@
+#######################
 # Visual Studio files #
 #######################
 .vs
 *.sln
-*.vcxproj
-*.vcxproj.*
+**.vcxproj
+**.vcxproj.*
+
+################
+# Binary files #
+################
+**.dll
+**.exe
+!Slue/vendor/Premake/premake5.exe
+**.o
+**.obj
+**.lib
