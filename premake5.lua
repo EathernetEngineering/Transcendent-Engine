@@ -68,21 +68,21 @@ project "Transcendent-Engine"
 
 		defines
 		{
-			"SL_BUILD_DLL"
+			"TE_BUILD_DLL"
 		}
 
 	filter "configurations:Debug"
-		defines "SL_DEBUG"
+		defines "TE_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "SL_RELEASE"
+		defines "TE_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Distrib"
-		defines "SL_DISTRIB"
+		defines "TE_DISTRIB"
 		runtime "Release"
 		optimize "on"
 
@@ -119,16 +119,16 @@ project "Sandbox"
 		systemversion "latest"
 		
 	filter "configurations:Debug"
-		defines "SL_DEBUG"
+		defines "TE_DEBUG"
 		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
-		defines "SL_RELEASE"
+		defines "TE_RELEASE"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
-		defines "SL_DISTRIB"
+		defines "TE_DISTRIB"
 		runtime "Release"
 		optimize "on"
