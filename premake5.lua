@@ -36,6 +36,9 @@ project "Transcendent-Engine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "tepch.h"
+	pchsource "Transcendent-Engine/src/tepch.cpp"
+
 	files
 	{
 		"%{prj.name}/include/Transcendent-Engine.h",
@@ -51,6 +54,7 @@ project "Transcendent-Engine"
 	includedirs
 	{
 		"%{prj.name}/src",
+		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src/Transcendent-Engine",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}"
