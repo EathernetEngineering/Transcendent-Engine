@@ -1,3 +1,6 @@
 [submodule "Transcendent-Engine/vendor/glfw"]
 	path = Transcendent-Engine/vendor/glfw
 	url = https://github.com/TheCherno/glfw
+[submodule "Transcendent-Engine/vendor/spdlog"]
+	path = Transcendent-Engine/vendor/spdlog
+	url = https://github.com/gabime/spdlog
