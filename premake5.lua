@@ -19,6 +19,8 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Transcendent-Engine/vendor/glfw/include"
 IncludeDir["GLAD"] = "Transcendent-Engine/vendor/glad/include"
+IncludeDir["glm"] = "Transcendent-Engine/vendor/glm"
+IncludeDir["stb"] = "Transcendent-Engine/vendor/stb"
 
 group "Dependencies"
 	include "Transcendent-Engine/vendor/glfw"
@@ -43,12 +45,16 @@ project "Transcendent-Engine"
 	{
 		"%{prj.name}/include/Transcendent-Engine.h",
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb/**.h",
+		"%{prj.name}/vendor/stb/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 
 	defines
 	{
-		"_TEMP_DEFINE"
+		"_CRT_SECURE_NO_WARNINGS"
 	}
 
 	includedirs
@@ -57,7 +63,9 @@ project "Transcendent-Engine"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src/Transcendent-Engine",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.GLAD}"
+		"%{IncludeDir.GLAD}",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}"
 	}
 
 	links
@@ -72,7 +80,8 @@ project "Transcendent-Engine"
 
 		defines
 		{
-			"TE_BUILD_DLL"
+			"TE_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 	filter "configurations:Debug"
@@ -109,9 +118,10 @@ project "Sandbox"
 
 	includedirs
 	{
+		"Transcendent-Engine/vendor/spdlog/include",
 		"Transcendent-Engine/src",
-		"Transcendent-Engine/src/Transcendent-Engine",
-		"Transcendent-Engine/vendor"
+		"Transcendent-Engine/vendor",
+		"%{IncludeDir.glm}"
 	}
 
 	links

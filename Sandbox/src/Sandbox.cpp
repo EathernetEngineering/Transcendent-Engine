@@ -3,13 +3,17 @@
 class Sandbox : public TE::Application
 {
 public:
-	void run() override;
+	void Run() override;
+	void Get() override;
 };
 
 TE::Application* TE::createApplication() {
 	return new Sandbox;
 }
 
-void Sandbox::run() {
+void Sandbox::Run() {
+	while (true);
+}
+void Sandbox::Get() {
 	while (true);
 }

@@ -7,7 +7,7 @@ int main(int argc, char* argv) {
 
 	auto app = TE::createApplication();
 
-	app->run();
+	app->Run();
 
 	delete app;
 
