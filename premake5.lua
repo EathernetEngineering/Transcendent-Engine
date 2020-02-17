@@ -19,12 +19,14 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Transcendent-Engine/vendor/glfw/include"
 IncludeDir["GLAD"] = "Transcendent-Engine/vendor/glad/include"
+IncludeDir["ImGui"] = "Transcendent-Engine/vendor/imgui"
 IncludeDir["glm"] = "Transcendent-Engine/vendor/glm"
 IncludeDir["stb"] = "Transcendent-Engine/vendor/stb"
 
 group "Dependencies"
 	include "Transcendent-Engine/vendor/glfw"
 	include "Transcendent-Engine/vendor/glad"
+	include "Transcendent-Engine/vendor/imgui"
 
 group ""
 
@@ -63,6 +65,7 @@ project "Transcendent-Engine"
 		"%{prj.name}/src/Transcendent-Engine",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}",
+		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}"
 	}
@@ -71,6 +74,7 @@ project "Transcendent-Engine"
 	{
 		"GLFW",
 		"GLAD",
+		"ImGui",
 		"opengl32.lib"
 	}
 

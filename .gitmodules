@@ -10,3 +10,6 @@
 [submodule "Transcendent-Engine/vendor/stb"]
 	path = Transcendent-Engine/vendor/stb
 	url = https://github.com/nothings/stb
+[submodule "Transcendent-Engine/vendor/imgui"]
+	path = Transcendent-Engine/vendor/imgui
+	url = https://github.com/TheCherno/imgui
