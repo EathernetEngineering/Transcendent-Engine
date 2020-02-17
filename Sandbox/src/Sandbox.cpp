@@ -4,7 +4,6 @@ class Sandbox : public TE::Application
 {
 public:
 	void Run() override;
-	void Get() override;
 };
 
 TE::Application* TE::createApplication() {
@@ -12,8 +11,5 @@ TE::Application* TE::createApplication() {
 }
 
 void Sandbox::Run() {
-	while (true);
-}
-void Sandbox::Get() {
 	while (true);
 }

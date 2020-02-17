@@ -3,7 +3,10 @@
 
 #include "Transcendent-Engine/core/Window.h"
 
+int main(int argc, char** argv);
+
 namespace TE {
+
 	class Application
 	{
 	public:
@@ -24,7 +27,4 @@ namespace TE {
 	Application* createApplication();
 }
 
-
 extern TE::Application* TE::createApplication();
-
-int main(int argc, char** argv);

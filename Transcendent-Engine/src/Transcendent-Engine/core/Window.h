@@ -10,12 +10,13 @@ namespace TE {
 	struct WindowProps
 	{
 		std::string Title;
-		unsigned int width;
-		unsigned int height;
+		unsigned int Width;
+		unsigned int Height;
 
 		WindowProps(std::string Title = "Transcendent Engine",
 						unsigned int width = 1280u,
 						unsigned int height = 720u)
+			: Title(Title), Width(width), Height(height)
 		{
 		}
 	};
@@ -34,9 +35,9 @@ namespace TE {
 		virtual unsigned int GetHeight() const = 0;
 
 		// Window attributes
-		virtual void SetEventCallbackFn(const EventCallbackFn& callback) = 0;
+		inline virtual void SetEventCallbackFn(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
-		virtual void IsVSync() const = 0;
+		virtual bool IsVSync() const = 0;
 
 		virtual void* GetNativeWindow() const = 0;
 

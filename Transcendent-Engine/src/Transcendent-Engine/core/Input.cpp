@@ -2,7 +2,7 @@
 #include "Transcendent-Engine/core/Input.h"
 
 #ifdef TE_PLATFORM_WINDOWS
-#include "Platform/Windows/WindowsInput"
+#include "Platform/Windows/WindowsInput.h"
 #endif
 
 namespace TE {

@@ -61,7 +61,7 @@ namespace TE  {
 	template<typename T, typename ... Args>
 	constexpr Scope<T> CreateScope(Args&& ... args)
 	{
-		return std::make_unique<T>(std::forward < Args(args)...);
+		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
 
 	template<typename T>
