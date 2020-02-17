@@ -3,11 +3,11 @@
 #include "core.h"
 
 #ifdef TE_PLATFORM_WINDOWS
-int main(int argc, char* argv) {
+int main(int argc, char** argv) {
 
 	auto app = TE::createApplication();
 
-	app->run();
+	app->Run();
 
 	delete app;
 

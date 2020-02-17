@@ -53,7 +53,7 @@
 
 #define BIT(x) (1 << x)
 
-#define HZ_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+#define TE_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
 namespace TE  {
 	template<typename T>
@@ -61,7 +61,7 @@ namespace TE  {
 	template<typename T, typename ... Args>
 	constexpr Scope<T> CreateScope(Args&& ... args)
 	{
-		return std::make_unique<T>(std::forward < Args(args)...);
+		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
 
 	template<typename T>
