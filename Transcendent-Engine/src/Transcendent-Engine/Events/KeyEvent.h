@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Transcendent-Engine/Events/Event.h"
-#include "Transcendent-Engine/Core/Input.h"
 
 namespace TE {
 

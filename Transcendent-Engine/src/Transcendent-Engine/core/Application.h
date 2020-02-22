@@ -1,6 +1,5 @@
 #pragma once
 #include "Transcendent-Engine/core/core.h"
-
 #include "Transcendent-Engine/core/Window.h"
 
 int main(int argc, char** argv);
@@ -10,16 +9,18 @@ namespace TE {
 	class Application
 	{
 	public:
-		virtual void Run() = 0;
+		Application();
+		virtual ~Application() = default;
 
-		inline Window& GetWindow() { return *m_Window; }
+		virtual void Run();
+
 		inline static Application& Get() { return *s_Instance; }
 
 	private:
-		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 		bool m_Minimized = false;
 	private:
+		std::shared_ptr<Window> m_Window = nullptr;
 		static Application* s_Instance;
 		friend int ::main(int argc, char** argv);
 	};
