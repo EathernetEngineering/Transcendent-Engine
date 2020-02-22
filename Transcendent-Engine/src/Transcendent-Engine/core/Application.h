@@ -1,6 +1,9 @@
 #pragma once
 #include "Transcendent-Engine/core/core.h"
+
 #include "Transcendent-Engine/core/Window.h"
+#include "Transcendent-Engine/Events/Event.h"
+#include "Transcendent-Engine/Events/ApplicationEvent.h"
 
 int main(int argc, char** argv);
 
@@ -13,6 +16,10 @@ namespace TE {
 		virtual ~Application() = default;
 
 		virtual void Run();
+		virtual void OnEvent(Event& e);
+
+		virtual void OnWindowClose();
+		virtual void OnWindowResize();
 
 		inline static Application& Get() { return *s_Instance; }
 

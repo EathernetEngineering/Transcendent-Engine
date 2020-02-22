@@ -1,5 +1,8 @@
 #include "tepch.h"
-#include "Application.h"
+#include "Transcendent-Engine/core/Application.h"
+#include "Transcendent-Engine/core/Log.h"
+
+#include "Transcendent-Engine/core/Input.h"
 
 #include <GLFW/glfw3.h>
 
@@ -23,5 +26,20 @@ namespace TE {
 		m_Window->~Window();
 		m_Window = nullptr;
 		while (true);
+	}
+
+	void Application::OnEvent(Event& e) {
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<WindowCloseEvent>(TE_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(TE_BIND_EVENT_FN(Application::OnWindowResize));
+	}
+
+	void Application::OnWindowClose() {
+
+	}
+
+	void Application::OnWindowResize() {
+
 	}
 }
