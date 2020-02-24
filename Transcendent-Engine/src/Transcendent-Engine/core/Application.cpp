@@ -5,6 +5,7 @@
 #include "Transcendent-Engine/core/Input.h"
 
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace TE {
 
@@ -15,17 +16,15 @@ namespace TE {
 		TE_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 		m_Window = Window::Create();
+		m_Window->SetEventCallback(TE_BIND_EVENT_FN(Application::OnEvent));
 	}
 
 	void Application::Run() {
 
-		while (!glfwWindowShouldClose((GLFWwindow*)m_Window->GetNativeWindow())) 
+		while (m_Running) 
 		{
 			m_Window->OnUpdate();
 		}
-		m_Window->~Window();
-		m_Window = nullptr;
-		while (true);
 	}
 
 	void Application::OnEvent(Event& e) {
@@ -35,11 +34,23 @@ namespace TE {
 		dispatcher.Dispatch<WindowResizeEvent>(TE_BIND_EVENT_FN(Application::OnWindowResize));
 	}
 
-	void Application::OnWindowClose() {
+	bool Application::OnWindowClose(WindowCloseEvent& e) {
 
+		m_Running = false;
+		return true;
 	}
 
-	void Application::OnWindowResize() {
+	bool Application::OnWindowResize(WindowResizeEvent& e) {
 
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+
+		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+
+		m_Minimized = false;
+		return true;
 	}
 }

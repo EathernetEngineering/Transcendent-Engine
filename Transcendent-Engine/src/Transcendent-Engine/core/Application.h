@@ -18,10 +18,11 @@ namespace TE {
 		virtual void Run();
 		virtual void OnEvent(Event& e);
 
-		virtual void OnWindowClose();
-		virtual void OnWindowResize();
+		virtual bool OnWindowClose(WindowCloseEvent& e);
+		virtual bool OnWindowResize(WindowResizeEvent& e);
 
 		inline static Application& Get() { return *s_Instance; }
+		inline Window& GetWindow()       { return *m_Window;   }
 
 	private:
 		bool m_Running = true;
