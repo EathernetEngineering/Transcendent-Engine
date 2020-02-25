@@ -1,8 +1,7 @@
 #include "tepch.h"
+
 #include "Transcendent-Engine/core/Application.h"
 #include "Transcendent-Engine/core/Log.h"
-
-#include "Transcendent-Engine/core/Input.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>

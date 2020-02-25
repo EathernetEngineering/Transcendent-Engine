@@ -1,7 +1,7 @@
 #pragma once
 #include "Transcendent-Engine/core/core.h"
-
 #include "Transcendent-Engine/core/Window.h"
+#include "Transcendent-Engine/core/Input.h"
 #include "Transcendent-Engine/Events/Event.h"
 #include "Transcendent-Engine/Events/ApplicationEvent.h"
 
