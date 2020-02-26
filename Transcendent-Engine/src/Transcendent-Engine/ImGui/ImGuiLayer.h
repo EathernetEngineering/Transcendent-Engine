@@ -2,10 +2,6 @@
 
 #include "Transcendent-Engine/core/Layer.h"
 
-#include "Transcendent-Engine/Events/ApplicationEvent.h"
-#include "Transcendent-Engine/Events/KeyEvent.h"
-#include "Transcendent-Engine/Events/MouseEvent.h"
-
 namespace TE {
 
 	class ImGuiLayer : public Layer
@@ -14,10 +10,11 @@ namespace TE {
 		ImGuiLayer();
 		~ImGuiLayer() = default;
 
-		virtual void OnAttach();
-		virtual void OnDetach();
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
 
 		void Begin();
+		void OnImGuiRender() override;
 		void End();
 
 	private:

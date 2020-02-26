@@ -3,6 +3,8 @@
 #include "Transcendent-Engine/core/Application.h"
 #include "Transcendent-Engine/core/Log.h"
 
+#include "Transcendent-Engine/Renderer/Renderer.h"
+
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
@@ -16,14 +18,23 @@ namespace TE {
 		s_Instance = this;
 		m_Window = Window::Create();
 		m_Window->SetEventCallback(TE_BIND_EVENT_FN(Application::OnEvent));
+
+		Renderer::Init();
+
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
 	}
 
-	void Application::Run() {
+	 void Application::PushLayer(Layer* layer) {
 
-		while (m_Running) 
-		{
-			m_Window->OnUpdate();
-		}
+		 m_LayerStack.PushLayer(layer);
+		 layer->OnAttach();
+	}
+
+	void Application::PushOverlay(Layer* overlay) {
+
+		m_LayerStack.PushOverlay(overlay);
+		overlay->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e) {
@@ -31,6 +42,13 @@ namespace TE {
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(TE_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(TE_BIND_EVENT_FN(Application::OnWindowResize));
+
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+		{
+			(*it)->OnEvent(e);
+			if (e.Handled)
+				break;
+		}
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
@@ -51,5 +69,29 @@ namespace TE {
 
 		m_Minimized = false;
 		return true;
+
+	}
+
+	void Application::Run() {
+
+		while (m_Running) 
+		{
+			if (!m_Minimized) {
+
+				{
+					for (Layer* layer : m_LayerStack)
+						layer->OnUpdate();
+				}
+
+				m_ImGuiLayer->Begin();
+				{
+					for (Layer* layer : m_LayerStack)
+						layer->OnImGuiRender();
+				}
+				m_ImGuiLayer->End();
+			}
+
+			m_Window->OnUpdate();
+		}
 	}
 }

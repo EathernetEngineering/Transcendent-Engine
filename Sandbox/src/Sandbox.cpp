@@ -1,5 +1,7 @@
 #include "tepch.h"
-#include "../include/Transcendent-Engine.h"
+#include "Transcendent-Engine.h"
+#include "Transcendent-Engine/core/EntryPoint.h"
+#include "SandboxLayer.h"
 
 class Sandbox : public TE::Application
 {

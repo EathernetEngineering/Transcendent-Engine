@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Transcendent-Engine/Events/Event.h"
+
 namespace TE {
 
 	class Layer
@@ -12,7 +14,7 @@ namespace TE {
 		virtual void OnDetach() {}
 		virtual void OnUpdate() {}
 		virtual void OnImGuiRender() {}
-		virtual void OnEvent() {}
+		virtual void OnEvent(Event& e) {}
 
 		inline const std::string& GetName() const { return m_DebugName; }
 	protected:

@@ -1,11 +1,11 @@
 #include "tepch.h"
 #include "Transcendent-Engine/ImGui/ImGuiLayer.h"
 
+#include "Transcendent-Engine/core/Application.h"
+
 #include <ImGui.h>
 #include <examples/imgui_impl_glfw.h>
 #include <examples/imgui_impl_opengl3.h>
-
-#include "Transcendent-Engine/core/Application.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -61,6 +61,14 @@ namespace TE {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+	}
+
+	void ImGuiLayer::OnImGuiRender() {
+
+		static bool show = true;
+
+		ImGui::ShowDemoWindow((bool*)1);
+		ImGui::ShowAboutWindow((bool*)1);
 	}
 
 	void ImGuiLayer::End() {

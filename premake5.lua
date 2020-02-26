@@ -122,6 +122,7 @@ project "Sandbox"
 	includedirs
 	{
 		"Transcendent-Engine/vendor/spdlog/include",
+		"Transcendent-Engine/include",
 		"Transcendent-Engine/src",
 		"Transcendent-Engine/vendor",
 		"%{IncludeDir.glm}"
