@@ -4,6 +4,7 @@
 
 class SandboxLayer : public TE::Layer
 {
+public:
 	SandboxLayer();
 	~SandboxLayer();
 

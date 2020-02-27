@@ -6,7 +6,7 @@
 class Sandbox : public TE::Application
 {
 public:
-	Sandbox() = default;
+	Sandbox() { PushLayer(new SandboxLayer()); }
 };
 
 TE::Application* TE::createApplication() {
