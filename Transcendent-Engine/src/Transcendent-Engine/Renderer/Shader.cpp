@@ -38,7 +38,7 @@ namespace TE {
 		break;
 
 		default:
-			TE_CORE_ASSERT(false, "Unknown Renderer API")
+			TE_CORE_ASSERT(false, "Unknown Renderer API");
 		}
 	}
 
@@ -71,71 +71,72 @@ namespace TE {
 	
 	void Shader::SetUniform(int i0) {
 
-
+		m_ShaderAPI->SetUniform(i0);
 	}
 
 	
 	void Shader::SetUniform(int i0, int i1) {
 
+		m_ShaderAPI->SetUniform(i0, i1);
 	}
 
 	
 	void Shader::SetUniform(int i0, int i1, int i2) {
 
-
+		m_ShaderAPI->SetUniform(i0, i1, i2);
 	}
 
 	
 	void Shader::SetUniform(int i0, int i1, int i2, int i3) {
 
-
+		m_ShaderAPI->SetUniform(i0, i1, i2, i3);
 	}
 
 	
 	void Shader::SetUniform(float i0) {
 
-
+		m_ShaderAPI->SetUniform(i0);
 	}
 
 	
 	void Shader::SetUniform(float i0, float i1) {
 
-
+		m_ShaderAPI->SetUniform(i0, i1);
 	}
 
 	
 	void Shader::SetUniform(float i0, float i1, float i2) {
 
-
+		m_ShaderAPI->SetUniform(i0, i1, i2);
 	}
 
 	
 	void Shader::SetUniform(float i0, float i1, float i2, float i3) {
 
-
+		m_ShaderAPI->SetUniform(i0, i1, i2, i3);
 	}
 
 	
 	void Shader::SetUniform(glm::mat4 i0) {
 
-
+		m_ShaderAPI->SetUniform(i0);
 	}
 
 	
 	void Shader::SetUniform(glm::vec2 i0) {
 
-
+		m_ShaderAPI->SetUniform(i0);
 	}
 
 	
 	void Shader::SetUniform(glm::vec3 i0) {
 
-
+		m_ShaderAPI->SetUniform(i0);
 	}
 
 	
 	void Shader::SetUniform(glm::vec4 i0) {
 
-
+		m_ShaderAPI->SetUniform(i0);
 	}
 }

@@ -3,12 +3,16 @@
 
 namespace TE {
 
-	OpenGLShader::OpenGLShader(const std::string& Filepath, const std::string& Name) {
+	OpenGLShader::OpenGLShader(const std::string& Filepath, const std::string& Name) 
+		: Shader(Filepath, Name)
+	{
 
 		;
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name) {
+	OpenGLShader::OpenGLShader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name) 
+		: Shader(VertexSource, FragmentSource, Name) 
+	{
 
 		;
 	}
