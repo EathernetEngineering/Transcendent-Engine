@@ -76,6 +76,7 @@ namespace TE {
 
 		while (m_Running) 
 		{
+			RenderCommand::Clear();
 			if (!m_Minimized) {
 
 				{
@@ -90,7 +91,7 @@ namespace TE {
 				}
 				m_ImGuiLayer->End();
 			}
-
+			glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
 			m_Window->OnUpdate();
 		}
 	}

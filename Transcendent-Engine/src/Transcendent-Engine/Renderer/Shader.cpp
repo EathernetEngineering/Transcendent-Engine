@@ -52,16 +52,30 @@ namespace TE {
 		m_ShaderAPI->Unbind();
 	}
 
-	void Shader::ParseShader(const std::string& Filepath) {
+	Shader::ShaderSource Shader::ParseShader(const std::string& Filepath) {
 
 		m_ShaderAPI->ParseShader(Filepath);
+		std::string str[2];
+		str[0] = "1";
+		str[1] = "1";
+		return { str[0], str[1] };
 	}
 
-	void Shader::CompileShader(const std::string& VertexSource, const std::string& FragmnetSource) {
+	GLuint Shader::CompileShader(const ShaderSource& Source) {
 
-		m_ShaderAPI->CompileShader(VertexSource, FragmnetSource);
+		return m_ShaderAPI->CompileShader(Source);
 	}
 
+	GLuint Shader::CompileShader(const std::string& VertexSource, const std::string& FragmentSource) {
+
+		return m_ShaderAPI->CompileShader(VertexSource, FragmentSource);
+	}
+
+	GLuint Shader::GetUniformLocation() {
+
+		m_ShaderAPI->GetUniformLocation();
+		return 0;
+	}
 	
 	void Shader::SetUniform() {
 

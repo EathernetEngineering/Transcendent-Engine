@@ -13,4 +13,6 @@ public:
 
 	virtual void OnUpdate() override;
 	virtual void OnImGuiRender() override;
+
+	TE::Ref<TE::Shader> shader;
 };

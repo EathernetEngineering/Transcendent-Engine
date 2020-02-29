@@ -13,10 +13,38 @@ SandboxLayer::SandboxLayer() {
 
 void SandboxLayer::OnAttach() {
 
+	std::string test, vertex, fragment;
+	test = "name";
+
+	vertex   = "#version 410\n"
+			   "layout(location = 0) in vec4 VertexPosition;\n"
+			   "void main() {\n"
+			   "	gl_Position = VertexPosition;\n"
+			   "}\n";
+
+	fragment = "#version 410\n" 
+			   "out vec3 color;\n" 
+			   "void main() {\n" 
+			   "	color = vec3(1, 0, 0);\n" 
+			   "}\n";
+
+	shader = TE::CreateRef<TE::Shader>(vertex, fragment, test);
+
+	shader->Create();
+	shader->Bind();
+}
+
+void SandboxLayer::OnDetach() {
+
+	
+}
+
+void SandboxLayer::OnUpdate() {
+
 	GLuint ElementBuffer;
 	GLuint VertexBuffer;
 
-	float verticies[] {
+	float verticies[]{
 
 		-0.5f, -0.5f, 0.0f,
 		 0.5f, -0.5f, 0.0f,
@@ -24,7 +52,7 @@ void SandboxLayer::OnAttach() {
 		-0.5f,  0.5f, 0.0f
 	};
 
-	unsigned int Indexs[] {
+	unsigned int Indexs[]{
 
 		0, 1, 3,
 		1, 2, 3
@@ -43,16 +71,6 @@ void SandboxLayer::OnAttach() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ElementBuffer);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
-}
-
-void SandboxLayer::OnDetach() {
-
-
-}
-
-void SandboxLayer::OnUpdate() {
-
-	
 }
 
 void SandboxLayer::OnImGuiRender() {

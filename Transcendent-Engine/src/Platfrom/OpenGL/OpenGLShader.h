@@ -35,10 +35,12 @@ namespace TE {
 
 
 	private:
-		void ParseShader(const std::string& Filepath) override;
-		void CompileShader(const std::string& VertexShader, const std::string& FragmnetShader) override;
+		ShaderSource ParseShader(const std::string& Filepath) override;
+		GLuint CompileShader(const std::string& VertexShader, const std::string& FragmentShader) override;
+		GLuint CompileShader(const ShaderSource& Source) override;
 
 	private:
+		unsigned int m_ID;
 		Shader* m_Instance;
 	};
 }

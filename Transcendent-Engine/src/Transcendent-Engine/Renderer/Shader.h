@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include <glad/glad.h>
+
 namespace TE {
 
 	class Shader
@@ -32,9 +34,22 @@ namespace TE {
 		virtual void SetUniform    (float i0, float i1, float i2, float i3);
 
 
+	public:
+		struct ShaderSource
+		{
+			const std::string Vertex, Fragment;
+
+			ShaderSource(std::string& Vertex, std::string& Fragment)
+				: Vertex(Vertex), Fragment(Fragment)
+			{
+			}
+		};
+
 	private:
-		virtual void ParseShader(const std::string& Filepath);
-		virtual void CompileShader(const std::string& VertexSource, const std::string& FragmentSource);
+		virtual ShaderSource ParseShader(const std::string& Filepath);
+		virtual GLuint CompileShader(const std::string& VertexSource, const std::string& FragmentSource);
+		virtual GLuint CompileShader(const ShaderSource& Source);
+		virtual GLuint GetUniformLocation();
 
 	private:
 		const std::string m_Name;
