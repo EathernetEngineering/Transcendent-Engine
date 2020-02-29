@@ -76,6 +76,7 @@ namespace TE {
 
 		while (m_Running) 
 		{
+			RenderCommand::SetClearColor(glm::vec4(0.2f, 0.0f, 0.8f, 0.0f));
 			RenderCommand::Clear();
 			if (!m_Minimized) {
 

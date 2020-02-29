@@ -10,6 +10,10 @@
 #include "Transcendent-Engine/core/MouseCodes.h"
 
 #include "Transcendent-Engine/ImGui/ImGuiLayer.h"
-#include "Transcendent-Engine/Renderer/Shader.h"
 
 #include "Platfrom/OpenGL/OpenGLShader.h"
+#include "Platfrom/OpenGL/VertexArray.h"
+
+/* Renderer */
+#include "Transcendent-Engine/Renderer/RenderCommand.h"
+#include "Transcendent-Engine/Renderer/Shader.h"
