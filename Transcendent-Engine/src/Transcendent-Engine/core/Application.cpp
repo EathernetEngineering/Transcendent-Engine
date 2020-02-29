@@ -5,6 +5,8 @@
 
 #include "Transcendent-Engine/Renderer/Renderer.h"
 
+#include "imgui.h"
+
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
@@ -74,9 +76,11 @@ namespace TE {
 
 	void Application::Run() {
 
+		float colora[4] { 0.0f, 0.0f, 0.0f, 1.0f };
+		glm::vec4 color(0.0f, 0.0f, 0.0f, 1.0f);
 		while (m_Running) 
 		{
-			RenderCommand::SetClearColor(glm::vec4(0.2f, 0.0f, 0.8f, 0.0f));
+			RenderCommand::SetClearColor(color);
 			RenderCommand::Clear();
 			if (!m_Minimized) {
 
@@ -90,6 +94,15 @@ namespace TE {
 					for (Layer* layer : m_LayerStack)
 						layer->OnImGuiRender();
 				}
+				ImGui::Begin("Window Options", (bool*)1, 0);
+				ImGui::ColorEdit4("Clear colour", colora);
+				color.r = colora[0];
+				color.g = colora[1];
+				color.b = colora[2];
+				color.a = colora[3];
+
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGui::End();
 				m_ImGuiLayer->End();
 			}
 			glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
