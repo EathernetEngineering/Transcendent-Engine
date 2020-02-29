@@ -35,6 +35,9 @@ namespace TE {
 	private:
 		std::shared_ptr<Window> m_Window = nullptr;
 		ImGuiLayer* m_ImGuiLayer;
+		bool m_clearColourWindowOpen = true;
+		bool m_ShowDemoWindow = true;
+		bool m_ShowAboutWindow = true;
 		bool m_Running = true;
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;
