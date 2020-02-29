@@ -94,15 +94,27 @@ namespace TE {
 					for (Layer* layer : m_LayerStack)
 						layer->OnImGuiRender();
 				}
-				ImGui::Begin("Window Options", (bool*)1, 0);
-				ImGui::ColorEdit4("Clear colour", colora);
-				color.r = colora[0];
-				color.g = colora[1];
-				color.b = colora[2];
-				color.a = colora[3];
-
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				ImGuiWindowFlags flags = 0;
+				flags |= ImGuiWindowFlags_NoCollapse;
+				flags |= ImGuiWindowFlags_NoTitleBar;
+				ImGui::Begin("Transcendent Engine", (bool*)1, flags);
+				ImGui::Checkbox("Show Window Options:", &m_clearColourWindowOpen);
+				ImGui::Checkbox("Show Demo Window:", &m_ShowDemoWindow);
+				ImGui::Checkbox("Show About Window:", &m_ShowAboutWindow);
 				ImGui::End();
+				m_ImGuiLayer->SetShowDemoWindow(m_ShowDemoWindow);
+				m_ImGuiLayer->SetShowAboutWindow(m_ShowAboutWindow);
+				if (m_clearColourWindowOpen) {
+					ImGui::Begin("Window Options", &m_clearColourWindowOpen, 0);
+					ImGui::ColorEdit4("Clear colour", colora);
+					color.r = colora[0];
+					color.g = colora[1];
+					color.b = colora[2];
+					color.a = colora[3];
+
+					ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+					ImGui::End();
+				}
 				m_ImGuiLayer->End();
 			}
 			glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
