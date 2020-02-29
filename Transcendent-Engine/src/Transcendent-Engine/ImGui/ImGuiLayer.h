@@ -2,10 +2,6 @@
 
 #include "Transcendent-Engine/core/Layer.h"
 
-#include "Transcendent-Engine/Events/ApplicationEvent.h"
-#include "Transcendent-Engine/Events/KeyEvent.h"
-#include "Transcendent-Engine/Events/MouseEvent.h"
-
 namespace TE {
 
 	class ImGuiLayer : public Layer
@@ -18,9 +14,10 @@ namespace TE {
 		virtual void OnDetach() override;
 
 		void Begin();
+		void OnImGuiRender() override;
 		void End();
 
 	private:
-		float m_time = 0.0f;
+		float m_Time = 0.0f;
 	};
 }

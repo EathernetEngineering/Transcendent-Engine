@@ -5,6 +5,7 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <cstdarg>
 #include <ostream>
 
 #include <string>
@@ -15,10 +16,7 @@
 #include <vector>
 
 #include "Transcendent-Engine/core/Log.h"
-#include "Transcendent-Engine/Debug/Instumentor.h"
 
-#ifdef _WIN32
-	#ifdef _WIN64
+#ifdef TE_PLATFORM_WINDOWS
 		#include <Windows.h>
-	#endif
 #endif

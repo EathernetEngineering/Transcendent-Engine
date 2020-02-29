@@ -1,15 +1,10 @@
 #include "tepch.h"
-#include "Platform/Windows/WindowsWindow.h"
+#include "Platfrom/OpenGL/OpenGLWindow.h"
 
-#include "Transcendent-Engine/Core/Input.h"
-
-#include "Transcendent-Engine/Events/ApplicationEvent.h"
-#include "Transcendent-Engine/Events/MouseEvent.h"
+#include "Transcendent-Engine/core/Input.h"
 #include "Transcendent-Engine/Events/KeyEvent.h"
-
-#include "Transcendent-Engine/Renderer/Renderer.h"
-
-#include "Platform/OpenGL/OpenGLContext.h"
+#include "Transcendent-Engine/Events/MouseEvent.h"
+#include "Transcendent-Engine/Events/ApplicationEvent.h"
 
 namespace TE {
 
@@ -20,55 +15,53 @@ namespace TE {
 		TE_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	WindowsWindow::WindowsWindow(const WindowProps& props)
-	{
-		TE_PROFILE_FUNCTION();
-
+	OpenGLWindow::OpenGLWindow(const WindowProps& props) {
+		
 		Init(props);
 	}
 
-	WindowsWindow::~WindowsWindow()
-	{
-		TE_PROFILE_FUNCTION();
+	OpenGLWindow::~OpenGLWindow() {
 
 		Shutdown();
 	}
 
-	void WindowsWindow::Init(const WindowProps& props)
-	{
-		TE_PROFILE_FUNCTION();
+	void OpenGLWindow::Init(const WindowProps& props) {
 
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		TE_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+		TE_CORE_INFO("Creating Window: {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (s_GLFWWindowCount == 0)
-		{
-			TE_PROFILE_SCOPE("glfwInit");
+		if (s_GLFWWindowCount <= 0) {
 			int success = glfwInit();
-			TE_CORE_ASSERT(success, "Could not intialize GLFW!");
+			TE_CORE_ASSERT(success, "Could not initialize GLFW");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
 		{
-			TE_PROFILE_SCOPE("glfwCreateWindow");
-#if defined(TE_DEBUG)
-			if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+			#if defined(TE_DEBUG)
 				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-#endif
+			#endif
+
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 			++s_GLFWWindowCount;
 		}
 
-		m_Context = GraphicsContext::Create(m_Window);
-		m_Context->Init();
+		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		TE_CORE_ASSERT(status, "Failed to initalize glad!");
+
+		TE_CORE_INFO("OpenGL Info:");
+		TE_CORE_INFO("    Vendor:    {0}", glGetString(GL_VENDOR));
+		TE_CORE_INFO("  Renderer:    {0}", glGetString(GL_RENDERER));
+		TE_CORE_INFO("   Version:    {0}", glGetString(GL_VERSION));
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
-		// Set GLFW callbacks
+		TE_CORE_INFO("     VSync:    {0}", this->IsVSync());
+
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			data.Width = width;
@@ -80,6 +73,7 @@ namespace TE {
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
 			WindowCloseEvent event;
 			data.EventCallback(event);
 			});
@@ -152,9 +146,7 @@ namespace TE {
 			});
 	}
 
-	void WindowsWindow::Shutdown()
-	{
-		TE_PROFILE_FUNCTION();
+	void OpenGLWindow::Shutdown() {
 
 		glfwDestroyWindow(m_Window);
 		--s_GLFWWindowCount;
@@ -165,17 +157,12 @@ namespace TE {
 		}
 	}
 
-	void WindowsWindow::OnUpdate()
-	{
-		TE_PROFILE_FUNCTION();
+	void OpenGLWindow::OnUpdate(void) {
 
 		glfwPollEvents();
-		m_Context->SwapBuffers();
 	}
 
-	void WindowsWindow::SetVSync(bool enabled)
-	{
-		TE_PROFILE_FUNCTION();
+	void OpenGLWindow::SetVSync(bool enabled) {
 
 		if (enabled)
 			glfwSwapInterval(1);
@@ -185,9 +172,8 @@ namespace TE {
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const
-	{
+	bool OpenGLWindow::IsVSync(void) const {
+
 		return m_Data.VSync;
 	}
-
 }

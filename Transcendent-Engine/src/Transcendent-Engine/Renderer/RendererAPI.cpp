@@ -1,7 +1,6 @@
 #include "tepch.h"
 #include "Transcendent-Engine/Renderer/RendererAPI.h"
-
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Platfrom/OpenGL/OpenGLRendererAPI.h"
 
 namespace TE {
 
@@ -11,12 +10,11 @@ namespace TE {
 	{
 		switch (s_API)
 		{
-		case RendererAPI::API::None:    TE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::NONE:    TE_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
 		case RendererAPI::API::OpenGL:  return CreateScope<OpenGLRendererAPI>();
 		}
 
 		TE_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
-
 }

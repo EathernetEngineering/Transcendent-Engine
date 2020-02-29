@@ -13,3 +13,4 @@
 [submodule "Transcendent-Engine/vendor/imgui"]
 	path = Transcendent-Engine/vendor/imgui
 	url = https://github.com/TheCherno/imgui
+	branch = docking

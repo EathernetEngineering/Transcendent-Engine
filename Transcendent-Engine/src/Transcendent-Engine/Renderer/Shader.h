@@ -1,44 +1,62 @@
 #pragma once
 
-#include <string>
-#include <unordered_map>
-
 #include <glm/glm.hpp>
+
+#include <glad/glad.h>
 
 namespace TE {
 
 	class Shader
 	{
 	public:
-		virtual ~Shader() = default;
+		Shader(const std::string& Filepath, const std::string& Name);
+		Shader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name);
+		virtual ~Shader();
 
-		virtual void Bind() const = 0;
-		virtual void Unbind() const = 0;
+		virtual void Bind();
+		virtual void Unbind();
 
-		virtual void SetInt(const std::string& name, int value) = 0;
-		virtual void SetFloat3(const std::string& name, const glm::vec3& value) = 0;
-		virtual void SetFloat4(const std::string& name, const glm::vec4& value) = 0;
-		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
+		virtual void Create();
 
-		virtual const std::string& GetName() const = 0;
+		// T and C will be deduced by the compiler
+		virtual void SetUniform();
+		virtual void SetUniform    (int i0);
+		virtual void SetUniform    (float i0);
+		virtual void SetUniform    (glm::vec2 i0);
+		virtual void SetUniform    (glm::vec3 i0);
+		virtual void SetUniform    (glm::vec4 i0);
+		virtual void SetUniform    (glm::mat4 i0);
+		virtual void SetUniform    (int i0, int i1);
+		virtual void SetUniform    (float i0, float i1);
+		virtual void SetUniform    (int i0, int i1, int i2);
+		virtual void SetUniform    (float i0, float i1, float i2);
+		virtual void SetUniform    (int i0, int i1, int i2, int i3);
+		virtual void SetUniform    (float i0, float i1, float i2, float i3);
 
-		static Ref<Shader> Create(const std::string& filepath);
-		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
-	};
 
-	class ShaderLibrary
-	{
 	public:
-		void Add(const std::string& name, const Ref<Shader>& shader);
-		void Add(const Ref<Shader>& shader);
-		Ref<Shader> Load(const std::string& filepath);
-		Ref<Shader> Load(const std::string& name, const std::string& filepath);
+		struct ShaderSource
+		{
+			const std::string Vertex, Fragment;
 
-		Ref<Shader> Get(const std::string& name);
+			ShaderSource(std::string& Vertex, std::string& Fragment)
+				: Vertex(Vertex), Fragment(Fragment)
+			{
+			}
+		};
 
-		bool Exists(const std::string& name) const;
 	private:
-		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
-	};
+		virtual ShaderSource ParseShader(const std::string& Filepath);
+		virtual GLuint CompileShader(const std::string& VertexSource, const std::string& FragmentSource);
+		virtual GLuint CompileShader(const ShaderSource& Source);
+		virtual GLuint GetUniformLocation();
 
+	private:
+		const std::string m_Name;
+		const std::string m_Filepath = "";
+		const std::string m_VertexSource;
+		const std::string m_FragmentSource;
+		Shader* m_Instance;
+		Shader* m_ShaderAPI;
+	};
 }

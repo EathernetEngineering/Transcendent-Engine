@@ -9,16 +9,6 @@
 ################
 # Binary files #
 ################
-**.dll
-**.exe
-!Transcendent-Engine/vendor/Premake/premake5.exe
-**.pch
-**.o
-**.obj
-**.lib
-**.ilk
-**.pdb
-**.log
-**.idb
-**.tlog
-**.lastbuildstate
+bin/
+bin-int/
+**.ini
