@@ -2,7 +2,7 @@
 
 namespace TE {
 
-	class Textrue2D
+	class Texture2D
 	{
 	public:
 

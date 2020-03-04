@@ -3,6 +3,7 @@
 
 #include "Transcendent-Engine/Renderer/RenderCommand.h"
 #include "Transcendent-Engine/Renderer/Shader.h"
+#include "Transcendent-Engine/Renderer/Texture2D.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
