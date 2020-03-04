@@ -125,6 +125,7 @@ project "Sandbox"
 		"Transcendent-Engine/include",
 		"Transcendent-Engine/src",
 		"Transcendent-Engine/vendor",
+		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.glm}"
 	}

@@ -71,10 +71,9 @@ namespace TE {
 		return m_ShaderAPI->CompileShader(VertexSource, FragmentSource);
 	}
 
-	GLuint Shader::GetUniformLocation() {
+	GLuint Shader::GetUniformLocation(std::string& Name) {
 
-		m_ShaderAPI->GetUniformLocation();
-		return 0;
+		return m_ShaderAPI->GetUniformLocation(Name);
 	}
 	
 	void Shader::SetUniform() {
@@ -83,74 +82,56 @@ namespace TE {
 	}
 
 	
-	void Shader::SetUniform(int i0) {
+	void Shader::SetUniform(std::string& Name, int i0) {
 
-		m_ShaderAPI->SetUniform(i0);
+		m_ShaderAPI->SetUniform(Name, i0);
 	}
 
 	
-	void Shader::SetUniform(int i0, int i1) {
+	void Shader::SetUniform(std::string& Name, int i0, int i1) {
 
-		m_ShaderAPI->SetUniform(i0, i1);
+		m_ShaderAPI->SetUniform(Name, i0, i1);
 	}
 
 	
-	void Shader::SetUniform(int i0, int i1, int i2) {
+	void Shader::SetUniform(std::string& Name, int i0, int i1, int i2) {
 
-		m_ShaderAPI->SetUniform(i0, i1, i2);
+		m_ShaderAPI->SetUniform(Name, i0, i1, i2);
 	}
 
 	
-	void Shader::SetUniform(int i0, int i1, int i2, int i3) {
+	void Shader::SetUniform(std::string& Name, int i0, int i1, int i2, int i3) {
 
-		m_ShaderAPI->SetUniform(i0, i1, i2, i3);
+		m_ShaderAPI->SetUniform(Name, i0, i1, i2, i3);
 	}
 
 	
-	void Shader::SetUniform(float i0) {
+	void Shader::SetUniform(std::string& Name, float i0) {
 
-		m_ShaderAPI->SetUniform(i0);
+		m_ShaderAPI->SetUniform(Name, i0);
 	}
 
 	
-	void Shader::SetUniform(float i0, float i1) {
+	void Shader::SetUniform(std::string& Name, float i0, float i1) {
 
-		m_ShaderAPI->SetUniform(i0, i1);
+		m_ShaderAPI->SetUniform(Name, i0, i1);
 	}
 
 	
-	void Shader::SetUniform(float i0, float i1, float i2) {
+	void Shader::SetUniform(std::string& Name, float i0, float i1, float i2) {
 
-		m_ShaderAPI->SetUniform(i0, i1, i2);
+		m_ShaderAPI->SetUniform(Name, i0, i1, i2);
 	}
 
 	
-	void Shader::SetUniform(float i0, float i1, float i2, float i3) {
+	void Shader::SetUniform(std::string& Name, float i0, float i1, float i2, float i3) {
 
-		m_ShaderAPI->SetUniform(i0, i1, i2, i3);
+		m_ShaderAPI->SetUniform(Name, i0, i1, i2, i3);
 	}
 
 	
-	void Shader::SetUniform(glm::mat4 i0) {
+	void Shader::SetUniform(std::string& Name, glm::mat4 i0) {
 
-		m_ShaderAPI->SetUniform(i0);
-	}
-
-	
-	void Shader::SetUniform(glm::vec2 i0) {
-
-		m_ShaderAPI->SetUniform(i0);
-	}
-
-	
-	void Shader::SetUniform(glm::vec3 i0) {
-
-		m_ShaderAPI->SetUniform(i0);
-	}
-
-	
-	void Shader::SetUniform(glm::vec4 i0) {
-
-		m_ShaderAPI->SetUniform(i0);
+		m_ShaderAPI->SetUniform(Name, i0);
 	}
 }

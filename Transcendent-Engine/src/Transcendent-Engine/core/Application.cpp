@@ -5,7 +5,7 @@
 
 #include "Transcendent-Engine/Renderer/Renderer.h"
 
-#include "imgui.h"
+#include "glm/gtc/type_ptr.hpp"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -25,6 +25,10 @@ namespace TE {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		m_Flags |= ImGuiWindowFlags_NoCollapse;
+		m_Flags |= ImGuiWindowFlags_NoTitleBar;
+		m_Flags |= ImGuiWindowFlags_AlwaysAutoResize;
 	}
 
 	 void Application::PushLayer(Layer* layer) {
@@ -94,10 +98,8 @@ namespace TE {
 					for (Layer* layer : m_LayerStack)
 						layer->OnImGuiRender();
 				}
-				ImGuiWindowFlags flags = 0;
-				flags |= ImGuiWindowFlags_NoCollapse;
-				flags |= ImGuiWindowFlags_NoTitleBar;
-				ImGui::Begin("Transcendent Engine", (bool*)1, flags);
+
+				ImGui::Begin("Transcendent Engine", (bool*)1, m_Flags);
 				ImGui::Checkbox("Show Window Options:", &m_clearColourWindowOpen);
 				ImGui::Checkbox("Show Demo Window:", &m_ShowDemoWindow);
 				ImGui::Checkbox("Show About Window:", &m_ShowAboutWindow);
@@ -105,12 +107,8 @@ namespace TE {
 				m_ImGuiLayer->SetShowDemoWindow(m_ShowDemoWindow);
 				m_ImGuiLayer->SetShowAboutWindow(m_ShowAboutWindow);
 				if (m_clearColourWindowOpen) {
-					ImGui::Begin("Window Options", &m_clearColourWindowOpen, 0);
-					ImGui::ColorEdit4("Clear colour", colora);
-					color.r = colora[0];
-					color.g = colora[1];
-					color.b = colora[2];
-					color.a = colora[3];
+					ImGui::Begin("Window Options", &m_clearColourWindowOpen, ImGuiWindowFlags_AlwaysAutoResize);
+					ImGui::ColorEdit4("Clear colour", glm::value_ptr(color));
 
 					ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 					ImGui::End();

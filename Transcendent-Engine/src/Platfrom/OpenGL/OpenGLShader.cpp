@@ -10,17 +10,15 @@
 namespace TE {
 
 	OpenGLShader::OpenGLShader(const std::string& Filepath, const std::string& Name) 
-		: Shader(Filepath, Name)
+		: Shader(Filepath, Name), m_Filepath(Filepath), m_Name(Name), m_Instance(this),
+		  m_VertexSource("INVALID!"), m_FragmentSource("INVALID!")
 	{
-
-		m_ID = this->CompileShader(this->ParseShader(Filepath));
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name) 
-		: Shader(VertexSource, FragmentSource, Name) 
+		: Shader(VertexSource, FragmentSource, Name), m_Filepath("INVALID!"), m_Name(Name), m_Instance(this),
+		  m_VertexSource(VertexSource), m_FragmentSource(FragmentSource)
 	{
-
-		m_ID = this->CompileShader(VertexSource, FragmentSource);
 	}
 
 	OpenGLShader::~OpenGLShader() {
@@ -29,7 +27,12 @@ namespace TE {
 	}
 
 	void OpenGLShader::Create() {
-
+		if (m_Filepath != "INVALID!")
+			m_ID = this->CompileShader(this->ParseShader(m_Filepath));
+		else if (m_VertexSource != "INVALID!" && m_FragmentSource != "INVALID!")
+			m_ID = this->CompileShader(m_VertexSource, m_FragmentSource);
+		else
+			TE_CORE_ASSERT(false, "Shader filepath or source not provided!");
 	}
 
 	void OpenGLShader::Bind() {
@@ -95,7 +98,8 @@ namespace TE {
 			glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
 			TE_CORE_ERROR("{0}", VertexShaderErrorMessage.data());
 			TE_CORE_ASSERT(false, "Shader compilation failure!");
-		}
+		} 
+		else TE_CORE_INFO("Compiled vertex shader");
 
 		
 		char const* FragmentSourcePointer = FragmentSource.c_str();
@@ -110,7 +114,8 @@ namespace TE {
 			glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
 			TE_CORE_ERROR("{0}", FragmentShaderErrorMessage.data());
 			TE_CORE_ASSERT(false, "Shader compilation failure!");
-		}
+		} 
+		else TE_CORE_INFO("Compiled fragment shader");
 
 		// Link the program
 		
@@ -128,6 +133,7 @@ namespace TE {
 			TE_CORE_ERROR("{0}", ProgramErrorMessage.data());
 			TE_CORE_ASSERT(false, "Shader linking failure!");
 		}
+		else TE_CORE_INFO("Linked Shader");
 
 		glDetachShader(ProgramID, VertexShaderID);
 		glDetachShader(ProgramID, FragmentShaderID);
@@ -138,80 +144,78 @@ namespace TE {
 		return ProgramID;
 	}
 
+	GLuint OpenGLShader::GetUniformLocation(std::string& Name) {
+
+		if (m_UniformLocations.find(Name) != m_UniformLocations.end())
+			return m_UniformLocations[Name];
+
+		int location = glad_glGetUniformLocation(m_ID, Name.c_str());
+		if (location == -1) {
+			TE_CORE_WARN("Uniform {0} doesn't exist!", Name);
+			return INT_MAX;
+		}
+
+		m_UniformLocations[Name] = location;
+
+		return location;
+	}
+
 	void OpenGLShader::SetUniform() {
 
 		TE_CORE_ASSERT(false, "Data must be provided to template")
 	}
 
 	
-	void OpenGLShader::SetUniform(int i0) {
+	void OpenGLShader::SetUniform(std::string& Name, int i0) {
 
-		
+		glUniform1i(this->GetUniformLocation(Name), i0);
 	}
 
 	
-	void OpenGLShader::SetUniform(int i0, int i1) {
+	void OpenGLShader::SetUniform(std::string& Name, int i0, int i1) {
 
-		
+		glUniform2i(this->GetUniformLocation(Name), i0, i1);
 	}
 
 	
-	void OpenGLShader::SetUniform(int i0, int i1, int i2) {
+	void OpenGLShader::SetUniform(std::string& Name, int i0, int i1, int i2) {
 
-		
+		glUniform3i(this->GetUniformLocation(Name), i0, i1, i2);
 	}
 
 	
-	void OpenGLShader::SetUniform(int i0, int i1, int i2, int i3) {
+	void OpenGLShader::SetUniform(std::string& Name, int i0, int i1, int i2, int i3) {
 
-		
+		glUniform4i(this->GetUniformLocation(Name), i0, i1, i2, i3);
 	}
 
 	
-	void OpenGLShader::SetUniform(float i0) {
+	void OpenGLShader::SetUniform(std::string& Name, float i0) {
 
-		
+		glUniform1f(this->GetUniformLocation(Name), i0);
 	}
 
 	
-	void OpenGLShader::SetUniform(float i0, float i1) {
+	void OpenGLShader::SetUniform(std::string& Name, float i0, float i1) {
 
-
+		glUniform2f(this->GetUniformLocation(Name), i0, i1);
 	}
 
 	
-	void OpenGLShader::SetUniform(float i0, float i1, float i2) {
+	void OpenGLShader::SetUniform(std::string& Name, float i0, float i1, float i2) {
 
-
+		glUniform3f(this->GetUniformLocation(Name), i0, i1, i2);
 	}
 
 	
-	void OpenGLShader::SetUniform(float i0, float i1, float i2, float i3) {
+	void OpenGLShader::SetUniform(std::string& Name, float i0, float i1, float i2, float i3) {
 
-
+		glUniform4f(this->GetUniformLocation(Name), i0, i1, i2, i3);
 	}
 
 	
-	void OpenGLShader::SetUniform(glm::mat4 i0) {
+	void OpenGLShader::SetUniform(std::string& Name, glm::mat4 i0) {
 
-
-	}
-
-	
-	void OpenGLShader::SetUniform(glm::vec2 i0) {
-
-
-	}
-
-	
-	void OpenGLShader::SetUniform(glm::vec3 i0) {
-
-
-	}
-
-	
-	void OpenGLShader::SetUniform(glm::vec4 i0) {
-
-
+		glUniformMatrix4fv(this->GetUniformLocation(Name), 1, GL_FALSE, &i0[0][0]);
 	}
 }

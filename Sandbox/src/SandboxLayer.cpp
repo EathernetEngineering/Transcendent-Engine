@@ -13,8 +13,8 @@ SandboxLayer::SandboxLayer() {
 
 void SandboxLayer::OnAttach() {
 
-	std::string test, vertex, fragment;
-	test = "name";
+	std::string Name, vertex, fragment;
+	Name = "name";
 
 	vertex   = "#version 410\n"
 			   "layout(location = 0) in vec4 VertexPosition;\n"
@@ -23,12 +23,12 @@ void SandboxLayer::OnAttach() {
 			   "}\n";
 
 	fragment = "#version 410\n" 
-			   "out vec3 color;\n" 
+			   "layout(location = 0) out vec4 color;\n" 
 			   "void main() {\n" 
-			   "	color = vec3(1, 0, 0);\n" 
+			   "	color = vec4(0.2f, 0.0f, 0.8f, 1.0f);\n" 
 			   "}\n";
 
-	m_shader = TE::CreateRef<TE::Shader>(vertex, fragment, test);
+	m_shader = TE::CreateRef<TE::Shader>(vertex, fragment, Name);
 	
 	m_shader->Create();
 	m_shader->Bind();
