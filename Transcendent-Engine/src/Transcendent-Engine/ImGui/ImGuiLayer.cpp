@@ -63,15 +63,7 @@ namespace TE {
 		ImGui::NewFrame();
 	}
 
-	void ImGuiLayer::OnImGuiRender() {
-
-		static bool show = true;
-
-		if (m_ShowDemoWindow)
-			ImGui::ShowDemoWindow(&m_ShowDemoWindow);
-		if (m_ShowAboutWindow)
-			ImGui::ShowAboutWindow(&m_ShowAboutWindow);
-	}
+	void ImGuiLayer::OnImGuiRender() { ; }
 
 	void ImGuiLayer::End() {
 

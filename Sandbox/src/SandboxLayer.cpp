@@ -16,16 +16,17 @@ void SandboxLayer::OnAttach() {
 	std::string Name, vertex, fragment;
 	Name = "name";
 
-	vertex   = "#version 410\n"
-			   "layout(location = 0) in vec4 VertexPosition;\n"
-			   "void main() {\n"
+	vertex   = "#version 410\n\n"
+			   "layout(location = 0) in vec4 VertexPosition;\n\n"
+			   "void main() {\n\n"
 			   "	gl_Position = VertexPosition;\n"
 			   "}\n";
 
-	fragment = "#version 410\n" 
-			   "layout(location = 0) out vec4 color;\n" 
-			   "void main() {\n" 
-			   "	color = vec4(0.2f, 0.0f, 0.8f, 1.0f);\n" 
+	fragment = "#version 410\n\n" 
+			   "layout(location = 0) out vec4 color;\n\n" 
+			   "uniform vec4 u_Colour;\n\n"
+			   "void main() {\n\n" 
+			   "	color = u_Colour;\n" 
 			   "}\n";
 
 	m_shader = TE::CreateRef<TE::Shader>(vertex, fragment, Name);
@@ -61,6 +62,8 @@ void SandboxLayer::OnDetach() {
 
 void SandboxLayer::OnUpdate() {
 
+	
+
 	m_shader->Bind();
 	m_VAO->Bind();
 	m_IndexBuffer->Bind();
@@ -69,7 +72,12 @@ void SandboxLayer::OnUpdate() {
 
 void SandboxLayer::OnImGuiRender() {
 
-	
+	ImGui::Begin("Box Colour");
+	ImGui::ColorEdit4("Colour", &m_Colour[0]);
+	ImGui::End();
+
+	m_shader->Bind();
+	m_shader->SetUniform(std::string("u_Colour"), m_Colour[0], m_Colour[1], m_Colour[2], m_Colour[3]);
 }
 
 SandboxLayer::~SandboxLayer() {

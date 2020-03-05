@@ -16,13 +16,8 @@ namespace TE {
 		void Begin();
 		void OnImGuiRender() override;
 		void End();
-		
-		void SetShowDemoWindow(bool open) { m_ShowDemoWindow = open; }
-		void SetShowAboutWindow(bool open) { m_ShowAboutWindow = open; }
 
 	private:
-		bool m_ShowDemoWindow = true;
-		bool m_ShowAboutWindow = true;
 		float m_Time = 0.0f;
 	};
 }
