@@ -17,3 +17,4 @@
 /* Renderer */
 #include "Transcendent-Engine/Renderer/RenderCommand.h"
 #include "Transcendent-Engine/Renderer/Shader.h"
+#include "Transcendent-Engine/Renderer/ShaderLibrary.h"

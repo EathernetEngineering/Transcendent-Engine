@@ -18,6 +18,9 @@ namespace TE {
 
 		void Create() override;
 
+		std::string GetName() { return m_Name; }
+		unsigned int GetID() { return m_ID; }
+
 		void SetUniform    ()															  override;
 		void SetUniform    (std::string& Name, int i0)                                    override;
 		void SetUniform    (std::string& Name, float i0)                                  override;

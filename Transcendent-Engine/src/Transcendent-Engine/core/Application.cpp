@@ -4,6 +4,7 @@
 #include "Transcendent-Engine/core/Log.h"
 
 #include "Transcendent-Engine/Renderer/Renderer.h"
+#include "Transcendent-Engine/Renderer/ShaderLibrary.h"
 
 #include "glm/gtc/type_ptr.hpp"
 
@@ -22,6 +23,7 @@ namespace TE {
 		m_Window->SetEventCallback(TE_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
+		ShaderLibrary::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -96,8 +98,10 @@ namespace TE {
 				}
 
 				ImGui::Begin("Window Options");
-				ImGui::ColorEdit4("Clear colour", glm::value_ptr(color));
+				ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
+				ImGui::End();
 
+				ImGui::Begin("Debug");
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 				ImGui::End();
 

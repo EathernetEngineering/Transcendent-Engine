@@ -1,6 +1,8 @@
 #include "tepch.h"
 #include "SandboxLayer.h"
 #include "imgui/imgui.h"
+#include <unordered_map>
+#include <Transcendent-Engine/core/core.h>
 
 #include <glad/include/glad/glad.h>
 #include <glfw/include/GLFW/glfw3.h>
@@ -13,26 +15,7 @@ SandboxLayer::SandboxLayer() {
 
 void SandboxLayer::OnAttach() {
 
-	std::string Name, vertex, fragment;
-	Name = "name";
-
-	vertex   = "#version 410\n\n"
-			   "layout(location = 0) in vec4 VertexPosition;\n\n"
-			   "void main() {\n\n"
-			   "	gl_Position = VertexPosition;\n"
-			   "}\n";
-
-	fragment = "#version 410\n\n" 
-			   "layout(location = 0) out vec4 color;\n\n" 
-			   "uniform vec4 u_Colour;\n\n"
-			   "void main() {\n\n" 
-			   "	color = u_Colour;\n" 
-			   "}\n";
-
-	m_shader = TE::CreateRef<TE::Shader>(vertex, fragment, Name);
-	
-	m_shader->Create();
-	m_shader->Bind();
+	TE::ShaderLibrary::BindShader(std::string("Colour"));
 
 	float positions[] = {
 			-0.5f, -0.5f,
@@ -64,7 +47,7 @@ void SandboxLayer::OnUpdate() {
 
 	
 
-	m_shader->Bind();
+	TE::ShaderLibrary::BindShader(std::string("Colour"));
 	m_VAO->Bind();
 	m_IndexBuffer->Bind();
 	glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
@@ -76,8 +59,8 @@ void SandboxLayer::OnImGuiRender() {
 	ImGui::ColorEdit4("Colour", &m_Colour[0]);
 	ImGui::End();
 
-	m_shader->Bind();
-	m_shader->SetUniform(std::string("u_Colour"), m_Colour[0], m_Colour[1], m_Colour[2], m_Colour[3]);
+	TE::ShaderLibrary::GetShader(std::string("Colour"))->Bind();
+	TE::ShaderLibrary::GetShader(std::string("Colour"))->SetUniform(std::string("u_Colour"), m_Colour[0], m_Colour[1], m_Colour[2], m_Colour[3]);
 }
 
 SandboxLayer::~SandboxLayer() {

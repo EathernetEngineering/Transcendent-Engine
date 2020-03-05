@@ -13,7 +13,8 @@ namespace TE {
 	}
 
 	Shader::Shader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name) 
-		: m_Instance(this), m_ShaderAPI(nullptr), m_VertexSource(VertexSource), m_FragmentSource(FragmentSource)
+		: m_Instance(this), m_ShaderAPI(nullptr), m_VertexSource(VertexSource), 
+			m_FragmentSource(FragmentSource), m_Name(Name)
 	{
 	}
 

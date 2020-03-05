@@ -18,6 +18,9 @@ namespace TE {
 
 		virtual void Create();
 
+		virtual std::string GetName() { return m_Name; }
+		virtual unsigned int  GetID() { return m_ShaderAPI->GetID(); }
+
 		// T and C will be deduced by the compiler
 		virtual void SetUniform();
 		virtual void SetUniform    (std::string& Name, int i0);
