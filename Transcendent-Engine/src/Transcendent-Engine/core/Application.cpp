@@ -4,12 +4,31 @@
 #include "Transcendent-Engine/core/Log.h"
 
 #include "Transcendent-Engine/Renderer/Renderer.h"
+#include "Transcendent-Engine/Renderer/Renderer2D.h"
 #include "Transcendent-Engine/Renderer/ShaderLibrary.h"
 
 #include "glm/gtc/type_ptr.hpp"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
+
+static uint64_t memalloc;
+static uint64_t memfree;
+static uint64_t memattime() { return memalloc - memfree; }
+
+void* operator new(size_t size) {
+
+	memalloc += size;
+
+	return malloc(size);
+}
+
+void operator delete(void* memory, size_t size) {
+
+memfree -= size;
+
+free(memory);
+}
 
 namespace TE {
 
@@ -27,12 +46,14 @@ namespace TE {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		Renderer2D::Init();
 	}
 
-	 void Application::PushLayer(Layer* layer) {
+	void Application::PushLayer(Layer* layer) {
 
-		 m_LayerStack.PushLayer(layer);
-		 layer->OnAttach();
+		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay) {
@@ -57,6 +78,8 @@ namespace TE {
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
 
+		TE_CORE_WARN("Allocated {0} bytes of memory", memalloc);
+
 		m_Running = false;
 		return true;
 	}
@@ -80,7 +103,7 @@ namespace TE {
 
 		glm::vec4 color(0.0f, 0.0f, 0.0f, 1.0f);
 		bool clearColourWindowOpen;
-		while (m_Running) 
+		while (m_Running)
 		{
 			RenderCommand::SetClearColor(color);
 			RenderCommand::Clear();
@@ -103,6 +126,9 @@ namespace TE {
 
 				ImGui::Begin("Debug");
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+				if (ImGui::Button("Print current memory usage")) {
+					TE_CORE_TRACE("Current memory usage is {0} bytes.", memattime());
+				}
 				ImGui::End();
 
 				m_ImGuiLayer->End();

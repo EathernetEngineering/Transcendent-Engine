@@ -25,8 +25,10 @@ namespace TE {
 						   
 		Default2Vertex =   "#version 410\n\n"
 						   "layout(location = 0) in vec4 VertexPosition;\n\n"
+						   "uniform mat4 u_ViewProjection;\n"
+						   "uniform mat4 u_Transform;\n\n"
 						   "void main() {\n\n"
-						   "	gl_Position = VertexPosition;\n"
+						   "	gl_Position = u_ViewProjection * u_Transform * VertexPosition;\n"
 						   "}\n";
 
 		Default2Fragment = "#version 410\n\n"
@@ -39,9 +41,11 @@ namespace TE {
 		Default3Vertex =   "#version 410\n\n"
 						   "layout(location = 0) in vec3 VertexPosition;\n"
 						   "layout(location = 1) in vec2 TexCoords;\n\n"
+						   "uniform mat4 u_Transform;\n"
+						   "uniform mat4 u_ViewProjection;\n"
 						   "out vec2 v_TexCoord;\n\n"
 						   "void main() {\n\n"
-						   "	gl_Position = vec4(VertexPosition, 1.0);\n"
+						   "	gl_Position = u_ViewProjection * u_Transform * vec4(VertexPosition, 1.0);\n"
 						   "	v_TexCoord = TexCoords;\n"	
 						   "}\n";
 
@@ -69,6 +73,11 @@ namespace TE {
 		GetShader(Name)->Bind();
 	}
 
+	void ShaderLibrary::BindShader(const char* Name) {
+
+		GetShader(Name)->Bind();
+	}
+
 	void ShaderLibrary::BindShader(unsigned int ID) {
 
 		GetShader(m_Names[ID])->Bind();
@@ -79,12 +88,31 @@ namespace TE {
 		GetShader(Name)->Unbind();
 	}
 
+	void ShaderLibrary::UnbindShader(const char* Name) {
+
+		GetShader(Name)->Unbind();
+	}
+
 	void ShaderLibrary::UnbindShader(unsigned int ID) {
 
 		GetShader(m_Names[ID])->Unbind();
 	}
 
 	void ShaderLibrary::Add(const std::string& Filepath, const std::string& Name) {
+
+		if (m_Shaders.find(Name) != m_Shaders.end()) {
+			if (m_Shaders[Name] != nullptr)
+				TE_CORE_WARN("Shader {0} already exists!", Name);
+		}
+		else {
+		m_Shaders[Name] = CreateRef<Shader>(Filepath, Name);
+		m_Shaders[Name]->Create();
+		m_IDs[Name] = m_Shaders[Name]->GetID();
+		m_Names[m_IDs[Name]] = Name;
+		}
+	}
+
+	void ShaderLibrary::Add(const char* Filepath, const char* Name) {
 
 		if (m_Shaders.find(Name) != m_Shaders.end()) {
 			if (m_Shaders[Name] != nullptr)
@@ -112,7 +140,31 @@ namespace TE {
 		}
 	}
 
+	void ShaderLibrary::Add(const char* VertexSource, const char* FragmentSource, const char* Name) {
+
+		if (m_Shaders.find(Name) != m_Shaders.end()) {
+			if (m_Shaders[Name] != nullptr)
+				TE_CORE_WARN("Shader {0} already exists!", Name);
+		}
+		else {
+			m_Shaders[Name] = CreateRef<Shader>(VertexSource, FragmentSource, Name);
+			m_Shaders[Name]->Create();
+			m_IDs[Name] = m_Shaders[Name]->GetID();
+			m_Names[m_IDs[Name]] = Name;
+		}
+	}
+
 	void ShaderLibrary::Remove(std::string& Name) {
+
+		if (m_Shaders.find(Name) != m_Shaders.end()) {
+			m_Shaders[Name] = nullptr;
+			m_Names[m_IDs[Name]] = "\n";
+			m_IDs[Name] = (unsigned int)-1;
+		} else
+			TE_CORE_WARN("Shader {0} doesn't exist!", Name);
+	}
+
+	void ShaderLibrary::Remove(const char* Name) {
 
 		if (m_Shaders.find(Name) != m_Shaders.end()) {
 			m_Shaders[Name] = nullptr;
@@ -150,7 +202,27 @@ namespace TE {
 			TE_CORE_WARN("Shader {0} doesn't exist!", Name);
 	}
 
+	unsigned int ShaderLibrary::GetID(const char* Name) {
+
+		if (m_IDs.find(Name) != m_IDs.end())
+			if (m_Shaders[Name] != nullptr)
+				return m_IDs[Name];
+		else
+			TE_CORE_WARN("Shader {0} doesn't exist!", Name);
+	}
+
 	Ref<Shader> ShaderLibrary::GetShader(std::string& Name) {
+
+		if (m_Shaders.find(Name) != m_Shaders.end())
+			if (m_Shaders[Name] != nullptr)
+				return m_Shaders[Name];
+		else
+			TE_CORE_WARN("Shader {0} doesn't exist!", Name);
+
+		return nullptr;
+	}
+
+	Ref<Shader> ShaderLibrary::GetShader(const char* Name) {
 
 		if (m_Shaders.find(Name) != m_Shaders.end())
 			if (m_Shaders[Name] != nullptr)

@@ -144,7 +144,7 @@ namespace TE {
 		return ProgramID;
 	}
 
-	GLuint OpenGLShader::GetUniformLocation(std::string& Name) {
+	GLuint OpenGLShader::GetUniformLocation(const std::string& Name) {
 
 		if (m_UniformLocations.find(Name) != m_UniformLocations.end())
 			return m_UniformLocations[Name];
@@ -166,55 +166,100 @@ namespace TE {
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, int i0) {
+	void OpenGLShader::SetUniform(const std::string& Name, int i0) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform1i(this->GetUniformLocation(Name), i0);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, int i0, int i1) {
+	void OpenGLShader::SetUniform(const std::string& Name, int i0, int i1) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform2i(this->GetUniformLocation(Name), i0, i1);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, int i0, int i1, int i2) {
+	void OpenGLShader::SetUniform(const std::string& Name, int i0, int i1, int i2) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform3i(this->GetUniformLocation(Name), i0, i1, i2);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, int i0, int i1, int i2, int i3) {
+	void OpenGLShader::SetUniform(const std::string& Name, int i0, int i1, int i2, int i3) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform4i(this->GetUniformLocation(Name), i0, i1, i2, i3);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, float i0) {
+	void OpenGLShader::SetUniform(const std::string& Name, float i0) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform1f(this->GetUniformLocation(Name), i0);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, float i0, float i1) {
+	void OpenGLShader::SetUniform(const std::string& Name, float i0, float i1) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform2f(this->GetUniformLocation(Name), i0, i1);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, float i0, float i1, float i2) {
+	void OpenGLShader::SetUniform(const std::string& Name, float i0, float i1, float i2) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform3f(this->GetUniformLocation(Name), i0, i1, i2);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, float i0, float i1, float i2, float i3) {
+	void OpenGLShader::SetUniform(const std::string& Name, float i0, float i1, float i2, float i3) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniform4f(this->GetUniformLocation(Name), i0, i1, i2, i3);
 	}
 
 	
-	void OpenGLShader::SetUniform(std::string& Name, glm::mat4 i0) {
+	void OpenGLShader::SetUniform(const std::string& Name, glm::mat4 i0) {
+
+		if (this->GetUniformLocation(Name) == INT_MAX) {
+			TE_CORE_ERROR("{0} Does not exist!", Name);
+			return;
+		}
 
 		glUniformMatrix4fv(this->GetUniformLocation(Name), 1, GL_FALSE, &i0[0][0]);
 	}

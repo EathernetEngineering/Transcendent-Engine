@@ -10,32 +10,17 @@
 
 SandboxLayer::SandboxLayer() {
 
-
+	m_Position1 = { 200.0f, 200.0f };
+	m_Scale1 = { 100.0f,100.0f };
+	m_Colour1 = { 1.0f, 1.0f, 1.0f, 1.0f };
+	
+	m_Position2 = { 800.0f, 200.0f };
+	m_Scale2 = { 100.0f,100.0f };
+	m_Colour2 = { 1.0f, 1.0f, 1.0f, 1.0f };
 }
 
 void SandboxLayer::OnAttach() {
 
-	TE::ShaderLibrary::BindShader(std::string("Colour"));
-
-	float positions[] = {
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
-	};
-
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	m_VAO = TE::CreateRef<TE::VertexArray>();
-	TE::VertexArray va;
-	m_VertexBuffer = std::make_unique<TE::VertexBuffer>(positions, 4 * 2 * sizeof(float));
-	TE::VertexBufferLayout layout;
-	layout.Push<float>(2);
-	m_VAO->addBuffer(*m_VertexBuffer, layout);
-	m_IndexBuffer = std::make_unique<TE::IndexBuffer>(indices, 6);
 }
 
 void SandboxLayer::OnDetach() {
@@ -45,22 +30,21 @@ void SandboxLayer::OnDetach() {
 
 void SandboxLayer::OnUpdate() {
 
-	
-
-	TE::ShaderLibrary::BindShader(std::string("Colour"));
-	m_VAO->Bind();
-	m_IndexBuffer->Bind();
-	glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+	TE::Renderer2D::BeginScene(*m_Camera);
+	TE::Renderer2D::DrawQuad(m_Position1, m_Scale1, m_Colour1);
+	TE::Renderer2D::DrawQuad(m_Position2, m_Scale2, m_Colour2);
+	TE::Renderer2D::EndScene();
 }
 
 void SandboxLayer::OnImGuiRender() {
 
 	ImGui::Begin("Box Colour");
-	ImGui::ColorEdit4("Colour", &m_Colour[0]);
+	ImGui::ColorEdit4("Colour 1", &m_Colour1[0]);
+	ImGui::ColorEdit4("Colour 2", &m_Colour2[0]);
 	ImGui::End();
 
-	TE::ShaderLibrary::GetShader(std::string("Colour"))->Bind();
-	TE::ShaderLibrary::GetShader(std::string("Colour"))->SetUniform(std::string("u_Colour"), m_Colour[0], m_Colour[1], m_Colour[2], m_Colour[3]);
+	m_Colour1 = { m_Colour1[0], m_Colour1[1], m_Colour1[2], m_Colour1[3] };
+	m_Colour2 = { m_Colour2[0], m_Colour2[1], m_Colour2[2], m_Colour2[3] };
 }
 
 SandboxLayer::~SandboxLayer() {

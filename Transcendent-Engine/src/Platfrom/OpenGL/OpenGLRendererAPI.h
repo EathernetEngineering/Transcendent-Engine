@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Transcendent-Engine/Renderer/RendererAPI.h"
-#include "Platfrom/OpenGL/VertexArray.h"
+#include "Platfrom/OpenGL/OpenGLVertexArray.h"
 
 namespace TE {
 

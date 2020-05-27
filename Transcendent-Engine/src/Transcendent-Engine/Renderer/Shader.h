@@ -23,15 +23,15 @@ namespace TE {
 
 		// T and C will be deduced by the compiler
 		virtual void SetUniform();
-		virtual void SetUniform    (std::string& Name, int i0);
-		virtual void SetUniform    (std::string& Name, float i0);
-		virtual void SetUniform    (std::string& Name, glm::mat4 i0);
-		virtual void SetUniform    (std::string& Name, int i0, int i1);
-		virtual void SetUniform    (std::string& Name, float i0, float i1);
-		virtual void SetUniform    (std::string& Name, int i0, int i1, int i2);
-		virtual void SetUniform    (std::string& Name, float i0, float i1, float i2);
-		virtual void SetUniform    (std::string& Name, int i0, int i1, int i2, int i3);
-		virtual void SetUniform    (std::string& Name, float i0, float i1, float i2, float i3);
+		virtual void SetUniform    (const std::string& Name, int i0);
+		virtual void SetUniform    (const std::string& Name, float i0);
+		virtual void SetUniform    (const std::string& Name, glm::mat4 i0);
+		virtual void SetUniform    (const std::string& Name, int i0, int i1);
+		virtual void SetUniform    (const std::string& Name, float i0, float i1);
+		virtual void SetUniform    (const std::string& Name, int i0, int i1, int i2);
+		virtual void SetUniform    (const std::string& Name, float i0, float i1, float i2);
+		virtual void SetUniform    (const std::string& Name, int i0, int i1, int i2, int i3);
+		virtual void SetUniform    (const std::string& Name, float i0, float i1, float i2, float i3);
 
 
 	public:

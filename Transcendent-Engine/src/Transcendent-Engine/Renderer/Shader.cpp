@@ -55,11 +55,7 @@ namespace TE {
 
 	Shader::ShaderSource Shader::ParseShader(const std::string& Filepath) {
 
-		m_ShaderAPI->ParseShader(Filepath);
-		std::string str[2];
-		str[0] = "1";
-		str[1] = "1";
-		return { str[0], str[1] };
+		return m_ShaderAPI->ParseShader(Filepath);
 	}
 
 	GLuint Shader::CompileShader(const ShaderSource& Source) {
@@ -83,55 +79,55 @@ namespace TE {
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, int i0) {
+	void Shader::SetUniform(const std::string& Name, int i0) {
 
 		m_ShaderAPI->SetUniform(Name, i0);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, int i0, int i1) {
+	void Shader::SetUniform(const std::string& Name, int i0, int i1) {
 
 		m_ShaderAPI->SetUniform(Name, i0, i1);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, int i0, int i1, int i2) {
+	void Shader::SetUniform(const std::string& Name, int i0, int i1, int i2) {
 
 		m_ShaderAPI->SetUniform(Name, i0, i1, i2);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, int i0, int i1, int i2, int i3) {
+	void Shader::SetUniform(const std::string& Name, int i0, int i1, int i2, int i3) {
 
 		m_ShaderAPI->SetUniform(Name, i0, i1, i2, i3);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, float i0) {
+	void Shader::SetUniform(const std::string& Name, float i0) {
 
 		m_ShaderAPI->SetUniform(Name, i0);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, float i0, float i1) {
+	void Shader::SetUniform(const std::string& Name, float i0, float i1) {
 
 		m_ShaderAPI->SetUniform(Name, i0, i1);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, float i0, float i1, float i2) {
+	void Shader::SetUniform(const std::string& Name, float i0, float i1, float i2) {
 
 		m_ShaderAPI->SetUniform(Name, i0, i1, i2);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, float i0, float i1, float i2, float i3) {
+	void Shader::SetUniform(const std::string& Name, float i0, float i1, float i2, float i3) {
 
 		m_ShaderAPI->SetUniform(Name, i0, i1, i2, i3);
 	}
 
 	
-	void Shader::SetUniform(std::string& Name, glm::mat4 i0) {
+	void Shader::SetUniform(const std::string& Name, glm::mat4 i0) {
 
 		m_ShaderAPI->SetUniform(Name, i0);
 	}

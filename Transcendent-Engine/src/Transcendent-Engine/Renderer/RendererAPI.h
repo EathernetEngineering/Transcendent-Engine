@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "Platfrom/OpenGL/VertexArray.h"
+#include "Platfrom/OpenGL/OpenGLVertexArray.h"
 
 namespace TE {
 

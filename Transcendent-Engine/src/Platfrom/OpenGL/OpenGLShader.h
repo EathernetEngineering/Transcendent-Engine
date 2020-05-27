@@ -22,20 +22,20 @@ namespace TE {
 		unsigned int GetID() { return m_ID; }
 
 		void SetUniform    ()															  override;
-		void SetUniform    (std::string& Name, int i0)                                    override;
-		void SetUniform    (std::string& Name, float i0)                                  override;
-		void SetUniform    (std::string& Name, glm::mat4 i0)                              override;
-		void SetUniform    (std::string& Name, int i0, int i1)                            override;
-		void SetUniform    (std::string& Name, float i0, float i1)                        override;
-		void SetUniform    (std::string& Name, int i0, int i1, int i2)                    override;
-		void SetUniform    (std::string& Name, float i0, float i1, float i2)              override;
-		void SetUniform    (std::string& Name, int i0, int i1, int i2, int i3)            override;
-		void SetUniform    (std::string& Name, float i0, float i1, float i2, float i3)    override;
+		void SetUniform    (const std::string& Name, int i0)                                    override;
+		void SetUniform    (const std::string& Name, float i0)                                  override;
+		void SetUniform    (const std::string& Name, glm::mat4 i0)                              override;
+		void SetUniform    (const std::string& Name, int i0, int i1)                            override;
+		void SetUniform    (const std::string& Name, float i0, float i1)                        override;
+		void SetUniform    (const std::string& Name, int i0, int i1, int i2)                    override;
+		void SetUniform    (const std::string& Name, float i0, float i1, float i2)              override;
+		void SetUniform    (const std::string& Name, int i0, int i1, int i2, int i3)            override;
+		void SetUniform    (const std::string& Name, float i0, float i1, float i2, float i3)    override;
 
 
 	private:
 		ShaderSource ParseShader(const std::string& Filepath) override;
-		GLuint GetUniformLocation(std::string& Name);
+		GLuint GetUniformLocation(const std::string& Name);
 		GLuint CompileShader(const std::string& VertexShader, const std::string& FragmentShader) override;
 		GLuint CompileShader(const ShaderSource& Source) override;
 

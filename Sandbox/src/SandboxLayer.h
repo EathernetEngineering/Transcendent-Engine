@@ -15,10 +15,13 @@ public:
 	virtual void OnImGuiRender() override;
 
 private:
-	TE::Ref<TE::Shader> m_shader;
-	TE::Ref<TE::VertexArray> m_VAO;
-	TE::Ref<TE::VertexBuffer> m_VertexBuffer;
-	TE::Ref<TE::IndexBuffer> m_IndexBuffer;
-private:
-	float m_Colour[4] { 0.2f, 0.0f, 0.8f, 1.0f };
+	TE::OrthographicCamera* m_Camera = new TE::OrthographicCamera(0.0f, 1280.0f, 0.0f, 720.0f);
+
+	glm::vec2 m_Position1;
+	glm::vec2 m_Scale1;
+	glm::vec4 m_Colour1;
+
+	glm::vec2 m_Position2;
+	glm::vec2 m_Scale2;
+	glm::vec4 m_Colour2;
 };
