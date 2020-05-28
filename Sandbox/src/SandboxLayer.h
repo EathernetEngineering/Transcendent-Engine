@@ -17,6 +17,8 @@ public:
 private:
 	TE::OrthographicCamera* m_Camera = new TE::OrthographicCamera(0.0f, 1280.0f, 0.0f, 720.0f);
 
+	float m_pos1[2]{ 0.0f, 0.0f }, m_pos2[2]{ 0.0f, 0.0f };
+
 	glm::vec2 m_Position1;
 	glm::vec2 m_Scale1;
 	glm::vec4 m_Colour1;

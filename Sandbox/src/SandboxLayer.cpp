@@ -8,6 +8,8 @@
 #include <glfw/include/GLFW/glfw3.h>
 #include <gl/GL.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
 SandboxLayer::SandboxLayer() {
 
 	m_Position1 = { 200.0f, 200.0f };
@@ -43,6 +45,18 @@ void SandboxLayer::OnImGuiRender() {
 	ImGui::ColorEdit4("Colour 2", &m_Colour2[0]);
 	ImGui::End();
 
+	ImGui::Begin("Box Tranforms");
+	ImGui::SliderFloat("Box 1 Tranform X", &m_pos1[0], 0.0f, 1180.0f);
+	ImGui::SliderFloat("Box 1 Tranform Y", &m_pos1[1], 0.0f, 620.0f);
+	ImGui::SliderFloat("Box 2 Tranform X", &m_pos2[0], 0.0f, 1180.0f);
+	ImGui::SliderFloat("Box 2 Tranform Y", &m_pos2[1], 0.0f, 620.0f);
+	ImGui::End();
+
+	m_Position1.x = m_pos1[0] + 50.0f;
+	m_Position1.y = m_pos1[1] + 50.0f;
+	m_Position2.x = m_pos2[0] + 50.0f;
+	m_Position2.y = m_pos2[1] + 50.0f;
+		
 	m_Colour1 = { m_Colour1[0], m_Colour1[1], m_Colour1[2], m_Colour1[3] };
 	m_Colour2 = { m_Colour2[0], m_Colour2[1], m_Colour2[2], m_Colour2[3] };
 }
