@@ -38,4 +38,7 @@ private:
 	glm::vec2 m_Position4;
 	glm::vec2 m_Scale4;
 	glm::vec4 m_Colour4;
+
+	TE::FrameBufferSpecification* m_spec;
+	TE::Ref<TE::FrameBuffer> m_FrameBufferObject;
 };

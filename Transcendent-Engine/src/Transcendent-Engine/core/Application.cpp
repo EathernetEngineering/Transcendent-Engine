@@ -12,9 +12,9 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-static uint64_t memalloc;
-static uint64_t memfree;
-static uint64_t memattime() { return memalloc - memfree; }
+uint64_t memalloc;
+uint64_t memfree;
+uint64_t memattime() { return memalloc - memfree; }
 
 void* operator new(size_t size) {
 
@@ -46,6 +46,11 @@ namespace TE {
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		#if defined _DEBUG
+			m_DebugLayer = new DebugLayer("Debug");
+			PushLayer(m_DebugLayer);
+		#endif
 
 		Renderer2D::Init();
 	}
@@ -122,13 +127,6 @@ namespace TE {
 
 				ImGui::Begin("Window Options");
 				ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
-				ImGui::End();
-
-				ImGui::Begin("Debug");
-				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-				if (ImGui::Button("Print current memory usage")) {
-					TE_CORE_TRACE("Current memory usage is {0} bytes.", memattime());
-				}
 				ImGui::End();
 
 				m_ImGuiLayer->End();

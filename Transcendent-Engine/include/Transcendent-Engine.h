@@ -15,6 +15,7 @@
 #include "Platfrom/OpenGL/OpenGLVertexArray.h"
 
 /* Renderer */
+#include "Transcendent-Engine/Renderer/FrameBuffer.h"
 #include "Transcendent-Engine/Renderer/OrthographicCamera.h"
 #include "Transcendent-Engine/Renderer/Renderer2D.h"
 #include "Transcendent-Engine/Renderer/RenderCommand.h"

@@ -12,10 +12,14 @@
 
 SandboxLayer::SandboxLayer() {
 
+	
+}
+
+void SandboxLayer::OnAttach() {
 	m_Position1 = { 200.0f, 200.0f };
 	m_Scale1 = { 100.0f,100.0f };
 	m_Colour1 = { 1.0f, 1.0f, 1.0f, 1.0f };
-	
+
 	m_Position2 = { 800.0f, 200.0f };
 	m_Scale2 = { 100.0f,100.0f };
 	m_Colour2 = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -23,14 +27,15 @@ SandboxLayer::SandboxLayer() {
 	m_Position3 = { 200.0f, 200.0f };
 	m_Scale3 = { 100.0f,100.0f };
 	m_Colour3 = { 1.0f, 1.0f, 1.0f, 1.0f };
-	
+
 	m_Position4 = { 800.0f, 200.0f };
 	m_Scale4 = { 100.0f,100.0f };
 	m_Colour4 = { 1.0f, 1.0f, 1.0f, 1.0f };
-}
 
-void SandboxLayer::OnAttach() {
-
+	m_spec = new TE::FrameBufferSpecification();
+	m_spec->Width = 1280;
+	m_spec->Height = 720;
+	m_FrameBufferObject = TE::FrameBuffer::Create(*m_spec);
 }
 
 void SandboxLayer::OnDetach() {
@@ -41,10 +46,12 @@ void SandboxLayer::OnDetach() {
 void SandboxLayer::OnUpdate() {
 
 	TE::Renderer2D::BeginScene(*m_Camera);
+	m_FrameBufferObject->Bind();
 	TE::Renderer2D::DrawQuad(m_Position1, m_Scale1, m_Colour1);
 	TE::Renderer2D::DrawQuad(m_Position2, m_Scale2, m_Colour2);
 	TE::Renderer2D::DrawQuad(m_Position3, m_Scale3, m_Colour3);
 	TE::Renderer2D::DrawQuad(m_Position4, m_Scale4, m_Colour4);
+	m_FrameBufferObject->Unbind();
 	TE::Renderer2D::EndScene();
 }
 
@@ -90,6 +97,13 @@ void SandboxLayer::OnImGuiRender() {
 	m_Scale2 = { m_Scalef2, m_Scalef2 };
 	m_Scale3 = { m_Scalef3, m_Scalef3 };
 	m_Scale4 = { m_Scalef4, m_Scalef4 };
+
+	ImGui::Begin("Scene");
+	m_spec->Width  = ImGui::GetContentRegionAvail().x;
+	m_spec->Height = ImGui::GetContentRegionAvail().y;
+	m_FrameBufferObject->UpdateSpecification(*m_spec);
+	ImGui::Image((void*)m_FrameBufferObject->GetColourAttachmentRendererID(), ImVec2(m_spec->Width, m_spec->Height));
+	ImGui::End();
 }
 
 SandboxLayer::~SandboxLayer() {
