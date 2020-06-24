@@ -45,14 +45,14 @@ void SandboxLayer::OnDetach() {
 
 void SandboxLayer::OnUpdate() {
 
-	TE::Renderer2D::BeginScene(*m_Camera);
 	m_FrameBufferObject->Bind();
+	TE::Renderer2D::BeginScene(*m_Camera);
 	TE::Renderer2D::DrawQuad(m_Position1, m_Scale1, m_Colour1);
 	TE::Renderer2D::DrawQuad(m_Position2, m_Scale2, m_Colour2);
 	TE::Renderer2D::DrawQuad(m_Position3, m_Scale3, m_Colour3);
 	TE::Renderer2D::DrawQuad(m_Position4, m_Scale4, m_Colour4);
-	m_FrameBufferObject->Unbind();
 	TE::Renderer2D::EndScene();
+	m_FrameBufferObject->Unbind();
 }
 
 void SandboxLayer::OnImGuiRender() {
@@ -99,9 +99,9 @@ void SandboxLayer::OnImGuiRender() {
 	m_Scale4 = { m_Scalef4, m_Scalef4 };
 
 	ImGui::Begin("Scene");
-	m_spec->Width  = ImGui::GetContentRegionAvail().x;
-	m_spec->Height = ImGui::GetContentRegionAvail().y;
-	m_FrameBufferObject->UpdateSpecification(*m_spec);
+	//m_spec->Width  = ImGui::GetContentRegionAvail().x;
+	//m_spec->Height = ImGui::GetContentRegionAvail().y;
+	//m_FrameBufferObject->UpdateSpecification(*m_spec);
 	ImGui::Image((void*)m_FrameBufferObject->GetColourAttachmentRendererID(), ImVec2(m_spec->Width, m_spec->Height));
 	ImGui::End();
 }

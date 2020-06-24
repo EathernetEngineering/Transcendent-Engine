@@ -56,6 +56,7 @@ namespace TE {
 		
 		s_Data->TextureShader->Bind();
 		s_Data->TextureShader->SetUniform("u_ViewProjection", camera.GetViewProjectionMatrix());
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)

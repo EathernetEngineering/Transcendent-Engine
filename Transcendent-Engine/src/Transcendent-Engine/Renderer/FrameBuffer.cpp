@@ -15,7 +15,7 @@ namespace TE {
 			case RendererAPI::API::OpenGL:  return CreateRef<OpenGLFrameBuffer>(spec);
 		}
 		
-		TE_CORE_ASSERT(False, "UnKnown Renderer API");
+		TE_CORE_ASSERT(false, "UnKnown Renderer API");
 		return nullptr;
 	}
 
