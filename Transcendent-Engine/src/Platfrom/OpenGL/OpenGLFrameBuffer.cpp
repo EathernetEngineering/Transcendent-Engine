@@ -30,7 +30,7 @@ namespace TE {
 
 		//glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
 		//glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
-		////glTextureStorage2D(GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
+		////glTextureStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
 		//glTexImage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height, 0, GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL);
 		//glBindTexture(GL_TEXTURE_2D, 0);
 		//

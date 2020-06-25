@@ -1,6 +1,6 @@
 workspace "Transcendent-Engine"
 	architecture "x86_64"
-	startproject "Sandbox"
+	startproject "Editor"
 
 	configurations 
 	{
@@ -105,6 +105,56 @@ project "Transcendent-Engine"
 		
 project "Sandbox"
 	location "Sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Transcendent-Engine/vendor/spdlog/include",
+		"Transcendent-Engine/include",
+		"Transcendent-Engine/src",
+		"Transcendent-Engine/vendor",
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.GLAD}",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"Transcendent-Engine"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+		
+	filter "configurations:Debug"
+		defines "TE_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "TE_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "TE_DISTRIB"
+		runtime "Release"
+		optimize "on"
+		
+project "Editor"
+	location "Editor"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
