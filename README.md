@@ -1,10 +1,15 @@
 # Transcendent Engine
-Transcendent Engine game engine.
 
 ## About
 
-I am just trying to learn more code so this is just a practice project for me.
+Transcendent Engine Application Engine is a C++ based Application engine that can be used to develop 2D applications anywhere from video games to office utility applications.
 
-If you have any suggestions please let me know :)
+## About me
 
-## A massive thank you goes out to Harriet Chard for providing all of the artwork!
+I am a school student who is interested in programming. I made this engine as a learning project. The development has taught me a lot regarding source control, graphics programming and even logic in the importance of the order of functions.
+
+## The future
+
+I plan on updating this repository for as long as possible, continuously adding features to help make the engine as good as possible.
+
+## A massive thank you goes out to Harriet Chard for providing all of the artwork

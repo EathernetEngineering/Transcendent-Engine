@@ -26,9 +26,6 @@ void ImGuiUILayer::OnAttach()
 
 void ImGuiUILayer::OnDetach() 
 {
-	m_GameFrameBufferObject->Bind();
-	TE::Renderer2D::BeginScene(*m_GameCamera);
-	TE::Renderer2D::DrawQuad(glm::vec2(0, 0), glm::vec2(100, 100), glm::vec4(0.8f, 0.0f, 0.2, 1.0f)
 
 }
 
@@ -39,7 +36,10 @@ void ImGuiUILayer::OnUpdate()
 	TE::Renderer2D::BeginScene(*m_Camera);
 	TE::Renderer2D::DrawQuad(glm::vec2(0, 0), glm::vec2(100, 100), glm::vec4(0.2f, 0.0f, 0.8f, 1.0f));
 	TE::Renderer2D::EndScene();
-	m_FrameBufferObject->Unbind(););
+	m_FrameBufferObject->Unbind();
+	m_GameFrameBufferObject->Bind();
+	TE::Renderer2D::BeginScene(*m_GameCamera);
+	TE::Renderer2D::DrawQuad(glm::vec2(0, 0), glm::vec2(100, 100), glm::vec4(0.8f, 0.0f, 0.2, 1.0f));
 	TE::Renderer2D::EndScene();
 	m_GameFrameBufferObject->Unbind();
 }
