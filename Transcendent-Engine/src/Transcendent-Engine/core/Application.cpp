@@ -12,22 +12,61 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-uint64_t memalloc;
-uint64_t memfree;
-uint64_t memattime() { return memalloc - memfree; }
+uint32_t MemoryData::Allocations = 0;
+uint32_t MemoryData::Deletions   = 0;
+uint32_t MemoryData::memalloc    = 0;
+uint32_t MemoryData::memfree     = 0;
+uint32_t MemoryData::AllocationsAtTime() 
+{ 
+	return Allocations - Deletions; 
+}
+uint32_t MemoryData::memattime() 
+{ 
+	return memalloc - memfree; 
+}
+std::shared_ptr<std::string> MemoryData::memattimeString() 
+{ 
+	uint64_t temp = memalloc - memfree;
+	if (temp <= 1024)
+		return std::make_shared<std::string>(std::to_string(memalloc - memfree) + "B");
+	else if (temp > 1024 && temp <= 1024 * 1024)
+		return std::make_shared<std::string>(std::to_string((memalloc - memfree) / 1024) + "kB");
+	else if (temp > 1024 * 1024 && temp <= 1024 * 1024 * 1024)
+		return std::make_shared<std::string>(std::to_string((memalloc - memfree) / 1024 * 1024) + "MB");
+	else if (temp > 1024 * 1024 * 1024)
+		return std::make_shared<std::string>(std::to_string((memalloc - memfree) / 1024 * 1024 * 1024) + "GB");
+	else
+		return std::make_shared<std::string>("ERROR");
+}
+std::shared_ptr<std::string> MemoryData::TotalMemoryString() 
+{ 
+	uint64_t temp = memalloc;
+	if (temp <= 1024)
+		return std::make_shared<std::string>(std::to_string(memalloc) + "B");
+	else if (temp > 1024 && temp <= 1024 * 1024)
+		return std::make_shared<std::string>(std::to_string((memalloc) / 1024) + "kB");
+	else if (temp > 1024 * 1024 && temp <= 1024 * 1024 * 1024)
+		return std::make_shared<std::string>(std::to_string((memalloc) / 1024 * 1024) + "MB");
+	else if (temp > 1024 * 1024 * 1024)
+		return std::make_shared<std::string>(std::to_string((memalloc) / 1024 * 1024 * 1024) + "GB");
+	else
+		return std::make_shared<std::string>("ERROR");
+}
 
 void* operator new(size_t size) {
 
-	memalloc += size;
+	MemoryData::memalloc += size;
+	MemoryData::Allocations++;
 
 	return malloc(size);
 }
 
 void operator delete(void* memory, size_t size) {
-
-memfree -= size;
-
-free(memory);
+	
+	MemoryData::memfree += size;
+	MemoryData::Deletions++;
+	
+	free(memory);
 }
 
 namespace TE {
@@ -47,7 +86,7 @@ namespace TE {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-		#if defined _DEBUG
+		#if defined TE_DEBUG
 			m_DebugLayer = new DebugLayer("Debug");
 			PushLayer(m_DebugLayer);
 		#endif
@@ -83,7 +122,7 @@ namespace TE {
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
 
-		TE_CORE_WARN("Allocated {0} bytes of memory", memalloc);
+		TE_CORE_WARN("Allocated {0} of heap memory with a total of {1} allocations.", MemoryData::TotalMemoryString()->c_str(), MemoryData::Allocations);
 
 		m_Running = false;
 		return true;

@@ -8,7 +8,7 @@
 #include "Transcendent-Engine/core/LayerStack.h"
 #include "Transcendent-Engine/ImGui/ImGuiLayer.h"
 
-#if defined _DEBUG
+#if defined TE_DEBUG
 	#include "Transcendent-Engine/core/DebugLayer.h"
 #endif
 
@@ -16,9 +16,17 @@
 
 #include "imgui.h"
 
-extern uint64_t memalloc;
-extern uint64_t memfree;
-extern uint64_t memattime();
+struct MemoryData
+{
+	static uint32_t Allocations;
+	static uint32_t Deletions;
+	static uint32_t memalloc;
+	static uint32_t memfree;
+	static uint32_t AllocationsAtTime();
+	static uint32_t memattime();
+	static std::shared_ptr<std::string> memattimeString();
+	static std::shared_ptr<std::string> TotalMemoryString();
+};
 
 int main(int argc, char** argv);
 
@@ -49,7 +57,7 @@ namespace TE {
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;
 
-		#if defined _DEBUG
+		#if defined TE_DEBUG
 			Layer* m_DebugLayer;
 		#endif
 	private:
