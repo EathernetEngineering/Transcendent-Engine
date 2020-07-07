@@ -75,4 +75,12 @@ namespace TE  {
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
 
+	class NullReferenceException : public std::exception
+	{
+		NullReferenceException()
+			: exception("Null reference exception")
+		{
+		}
+	};
+
 }
