@@ -80,18 +80,18 @@ namespace TE {
 		m_Window = Window::Create();
 		m_Window->SetEventCallback(TE_BIND_EVENT_FN(Application::OnEvent));
 
-		//Renderer::Init();
-		//ShaderLibrary::Init();
-		//
-		//m_ImGuiLayer = new ImGuiLayer();
-		//PushOverlay(m_ImGuiLayer);
-		//
-		//#if defined TE_DEBUG
-		//	m_DebugLayer = new DebugLayer("Debug");
-		//	PushLayer(m_DebugLayer);
-		//#endif
-		//
-		//Renderer2D::Init();
+		Renderer::Init();
+		ShaderLibrary::Init();
+		
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverlay(m_ImGuiLayer);
+		
+		#if defined TE_DEBUG
+			m_DebugLayer = new DebugLayer("Debug");
+			PushLayer(m_DebugLayer);
+		#endif
+		
+		Renderer2D::Init();
 	}
 
 	void Application::PushLayer(Layer* layer) {
@@ -149,8 +149,8 @@ namespace TE {
 		bool clearColourWindowOpen;
 		while (m_Running)
 		{
-			//RenderCommand::SetClearColor(color);
-			//RenderCommand::Clear();
+			RenderCommand::SetClearColor(color);
+			RenderCommand::Clear();
 			if (!m_Minimized) {
 
 				{
@@ -158,19 +158,19 @@ namespace TE {
 						layer->OnUpdate();
 				}
 
-				//m_ImGuiLayer->Begin();
-				//{
-				//	for (Layer* layer : m_LayerStack)
-				//		layer->OnImGuiRender();
-				//}
+				m_ImGuiLayer->Begin();
+				{
+					for (Layer* layer : m_LayerStack)
+						layer->OnImGuiRender();
+				}
 
-				//ImGui::Begin("Window Options");
-				//ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
-				//ImGui::End();
-				//
-				//m_ImGuiLayer->End();
+				ImGui::Begin("Window Options");
+				ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
+				ImGui::End();
+				
+				m_ImGuiLayer->End();
 			}
-			//glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
+			glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
 			m_Window->OnUpdate();
 		}
 	}

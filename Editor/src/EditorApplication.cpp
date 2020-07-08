@@ -6,7 +6,7 @@
 class Editor : public TE::Application
 {
 public:
-	//Editor() { PushLayer(new ImGuiUILayer("UI Window")); }
+	Editor() { PushLayer(new ImGuiUILayer("UI Window")); }
 };
 
 TE::Application* TE::createApplication() {
