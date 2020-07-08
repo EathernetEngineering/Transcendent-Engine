@@ -77,6 +77,7 @@ namespace TE  {
 
 	class NullReferenceException : public std::exception
 	{
+	public:
 		NullReferenceException()
 			: exception("Null reference exception")
 		{

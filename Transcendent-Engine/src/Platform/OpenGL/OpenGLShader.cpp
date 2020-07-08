@@ -1,5 +1,5 @@
 #include "tepch.h"
-#include "Platfrom/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 #include <fstream>
 

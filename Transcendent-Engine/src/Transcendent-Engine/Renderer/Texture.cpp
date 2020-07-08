@@ -2,7 +2,7 @@
 #include "Transcendent-Engine/Renderer/Texture.h"
 
 #include "Transcendent-Engine/Renderer/Renderer.h"
-#include "Platfrom/OpenGL/OpenGLTexture.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace TE {
 

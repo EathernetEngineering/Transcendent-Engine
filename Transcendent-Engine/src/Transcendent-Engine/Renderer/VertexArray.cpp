@@ -1,7 +1,7 @@
 #include "tepch.h"
 #include "Transcendent-Engine/Renderer/VertexArray.h"
 #include "Transcendent-Engine/Renderer/Renderer.h"
-#include "Platfrom/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace TE {
 

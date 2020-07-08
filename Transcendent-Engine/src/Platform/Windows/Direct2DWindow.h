@@ -15,7 +15,6 @@ namespace TE {
 	{
 	public:
 		Direct2DWindow(const WindowProps& Props);
-		Direct2DWindow();
 		virtual ~Direct2DWindow();
 
 		virtual void OnUpdate() override;
@@ -24,7 +23,7 @@ namespace TE {
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 
-		virtual void SetVSync(bool enabled) override;
+		virtual void SetVSync(bool enabled) override {};
 		virtual bool IsVSync() const override { return m_Data.VSync; }
 
 		inline virtual void* GetNativeWindow() const override { return m_pWindow; }
@@ -33,23 +32,30 @@ namespace TE {
 		virtual HRESULT Init(const WindowProps& Props);
 		virtual void Shutdown();
 
-		template<typename T>
-		inline void Release(T** InterfaceToRelease);
+		template<typename Interface>
+		inline void Release(Interface** InterfaceToRelease);
 
-		template<typename T>
-		inline void SafeRelease(T** InterfaceToRelease) noexcept;
+		template<typename Interface>
+		inline void SafeRelease(Interface** InterfaceToRelease) noexcept;
 
-		void HandleError();
-		void HandleError(const std::string& msg);
+		static void HandleError();
+		static void HandleError(const std::string& msg);
 
 		virtual void RunMessageLoop();
 
-		HRESULT CreateDeviceIndependentResources();
+		HRESULT CreateDeviceIndependantResources();
 		HRESULT CreateDeviceResources();
 
 		void DiscardDeviceResources();
 
-		static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lparam);
+		void OnWindowResize(UINT Width, UINT Height);
+		void OnRender();
+
+		static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+	public:
+		std::function<void(void)> OnResizeEvent;
+		std::function<void(void)> OnQuitEvent;
 
 	private:
 		struct WindowData

@@ -1,5 +1,5 @@
 #include "tepch.h"
-#include "Platfrom/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>

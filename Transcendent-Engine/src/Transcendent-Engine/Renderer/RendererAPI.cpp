@@ -1,6 +1,6 @@
 #include "tepch.h"
 #include "Transcendent-Engine/Renderer/RendererAPI.h"
-#include "Platfrom/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 namespace TE {
 

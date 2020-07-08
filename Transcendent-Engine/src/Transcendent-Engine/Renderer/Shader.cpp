@@ -3,7 +3,7 @@
 
 #include "Transcendent-Engine/Renderer/RendererAPI.h"
 
-#include "Platfrom/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 namespace TE {
 

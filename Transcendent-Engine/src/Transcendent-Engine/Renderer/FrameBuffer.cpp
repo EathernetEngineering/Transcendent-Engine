@@ -3,7 +3,7 @@
 
 #include <Transcendent-Engine/Renderer/Renderer.h>
 
-#include <Platfrom/OpenGL/OpenGLFrameBuffer.h>
+#include <Platform/OpenGL/OpenGLFrameBuffer.h>
 
 namespace TE {
 

@@ -1,6 +1,6 @@
 #include "tepch.h"
 #include "Transcendent-Engine/core/Window.h"
-#include "Platfrom/OpenGL/OpenGLWindow.h"
+#include "Platform/OpenGL/OpenGLWindow.h"
 
 namespace TE {
 

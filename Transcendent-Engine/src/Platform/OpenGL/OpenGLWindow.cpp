@@ -1,5 +1,5 @@
 #include "tepch.h"
-#include "Platfrom/OpenGL/OpenGLWindow.h"
+#include "Platform/OpenGL/OpenGLWindow.h"
 
 #include "Transcendent-Engine/core/Input.h"
 #include "Transcendent-Engine/Events/KeyEvent.h"
