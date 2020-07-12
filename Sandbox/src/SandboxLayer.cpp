@@ -43,7 +43,7 @@ void SandboxLayer::OnDetach() {
 	
 }
 
-void SandboxLayer::OnUpdate() {
+void SandboxLayer::OnUpdate(TE::Timestep ts) {
 
 	m_FrameBufferObject->Bind();
 	TE::Renderer2D::BeginScene(*m_Camera);

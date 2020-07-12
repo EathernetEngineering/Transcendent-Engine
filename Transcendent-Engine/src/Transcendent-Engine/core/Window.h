@@ -10,10 +10,13 @@ namespace TE {
 		unsigned int Width;
 		unsigned int Height;
 
+		std::function<void(Event&)> Callback;
+
 		WindowProps(std::string Title = "Transcendent Engine",
 						unsigned int Width = 1280u,
-						unsigned int Height = 720u)
-			: Title(Title), Width(Width), Height(Height)
+						unsigned int Height = 720u,
+						std::function<void(Event&)> Callback = nullptr)
+			: Title(Title), Width(Width), Height(Height), Callback(Callback)
 		{
 		}
 	};

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Transcendent-Engine/core/core.h"
+#include "Transcendent-Engine/core/Timestep.h"
 #include "Transcendent-Engine/Events/Event.h"
 
 namespace TE {
@@ -12,7 +14,7 @@ namespace TE {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& e) {}
 

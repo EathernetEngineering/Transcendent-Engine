@@ -30,7 +30,7 @@ void ImGuiUILayer::OnDetach()
 }
 
 
-void ImGuiUILayer::OnUpdate() 
+void ImGuiUILayer::OnUpdate(TE::Timestep ts) 
 {
 	m_FrameBufferObject->Bind();
 	TE::Renderer2D::BeginScene(*m_Camera);

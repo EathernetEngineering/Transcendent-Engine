@@ -10,7 +10,7 @@ namespace TE {
 	public:
 		enum class API
 		{
-			NONE = 0, OpenGL = 1
+			NONE = 0, OpenGL = 1, DirectX12 = 2
 		};
 
 	public:

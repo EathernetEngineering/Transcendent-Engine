@@ -77,11 +77,10 @@ namespace TE {
 
 		TE_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
-		m_Window = Window::Create();
-		m_Window->SetEventCallback(TE_BIND_EVENT_FN(Application::OnEvent));
+		m_Window = Window::Create({ "Transcendent Engine", 1280, 720, TE_BIND_EVENT_FN(Application::OnEvent) });
 
-		Renderer::Init();
-		ShaderLibrary::Init();
+		//Renderer::Init();
+		//ShaderLibrary::Init();
 		
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -91,7 +90,7 @@ namespace TE {
 			PushLayer(m_DebugLayer);
 		#endif
 		
-		Renderer2D::Init();
+		//Renderer2D::Init();
 	}
 
 	void Application::PushLayer(Layer* layer) {
@@ -136,7 +135,7 @@ namespace TE {
 			return false;
 		}
 
-		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+		//glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
 		m_Minimized = false;
 		return true;
@@ -147,15 +146,20 @@ namespace TE {
 
 		glm::vec4 color(0.0f, 0.0f, 0.0f, 1.0f);
 		bool clearColourWindowOpen;
+		//m_LastFrameTime = glfwGetTime();
 		while (m_Running)
 		{
-			RenderCommand::SetClearColor(color);
-			RenderCommand::Clear();
+			//float time = glfwGetTime();
+			Timestep timestep = 0;
+			//m_LastFrameTime = time;
+
+			//RenderCommand::SetClearColor(color);
+			//RenderCommand::Clear();
 			if (!m_Minimized) {
 
 				{
 					for (Layer* layer : m_LayerStack)
-						layer->OnUpdate();
+						layer->OnUpdate(timestep);
 				}
 
 				m_ImGuiLayer->Begin();
@@ -163,14 +167,14 @@ namespace TE {
 					for (Layer* layer : m_LayerStack)
 						layer->OnImGuiRender();
 				}
-
+				
 				ImGui::Begin("Window Options");
 				ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
 				ImGui::End();
 				
 				m_ImGuiLayer->End();
 			}
-			glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
+			//glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
 			m_Window->OnUpdate();
 		}
 	}

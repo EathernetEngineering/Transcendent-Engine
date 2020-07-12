@@ -14,6 +14,8 @@
 
 #include "Transcendent-Engine/core/Window.h"
 
+#include "Transcendent-Engine/core/Timestep.h"
+
 #include "imgui.h"
 
 struct MemoryData
@@ -53,6 +55,7 @@ namespace TE {
 	private:
 		std::shared_ptr<Window> m_Window = nullptr;
 		ImGuiLayer* m_ImGuiLayer;
+		float m_LastFrameTime;
 		bool m_Running = true;
 		bool m_Minimized = false;
 		LayerStack m_LayerStack;

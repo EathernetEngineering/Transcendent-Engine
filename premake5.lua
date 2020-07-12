@@ -76,7 +76,9 @@ project "Transcendent-Engine"
 		"GLAD",
 		"ImGui",
 		"opengl32.lib",
-		"d2d1.lib"
+		"d3d12.lib",
+		"d3dcompiler.lib",
+		"dxgi.lib"
 	}
 
 	filter "system:windows"

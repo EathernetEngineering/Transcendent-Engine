@@ -4,6 +4,7 @@
 #include "Transcendent-Engine/core/Application.h"
 #include "Transcendent-Engine/core/core.h"
 #include "Transcendent-Engine/core/Log.h"
+#include "Transcendent-Engine/core/Timestep.h"
 
 #include "Transcendent-Engine/core/Input.h"
 #include "Transcendent-Engine/core/KeyCodes.h"
