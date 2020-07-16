@@ -4,6 +4,7 @@
 [submodule "Transcendent-Engine/vendor/spdlog"]
 	path = Transcendent-Engine/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+	branch = master
 [submodule "Transcendent-Engine/vendor/glm"]
 	path = Transcendent-Engine/vendor/glm
 	url = https://github.com/g-truc/glm
@@ -14,3 +15,6 @@
 	path = Transcendent-Engine/vendor/imgui
 	url = https://github.com/TheCherno/imgui
 	branch = docking
+[submodule "Transcendent-Engine/vendor/Transcendent-Entity"]
+	path = Transcendent-Engine/vendor/Transcendent-Entity
+	url = git@github.com:sammyboy0110/Transcendent-Entity
