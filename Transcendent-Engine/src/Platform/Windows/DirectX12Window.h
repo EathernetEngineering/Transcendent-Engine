@@ -47,6 +47,10 @@ namespace TE {
 
 		void LoadPipeline();
 
+		void FlushGpu();
+
+		void WaitForGpu() noexcept;
+
 	private:
 		struct WindowData
 		{

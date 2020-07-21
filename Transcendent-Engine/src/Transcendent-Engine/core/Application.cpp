@@ -162,17 +162,17 @@ namespace TE {
 						layer->OnUpdate(timestep);
 				}
 
-				m_ImGuiLayer->Begin();
-				{
-					for (Layer* layer : m_LayerStack)
-						layer->OnImGuiRender();
-				}
-				
-				ImGui::Begin("Window Options");
-				ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
-				ImGui::End();
-				
-				m_ImGuiLayer->End();
+				//m_ImGuiLayer->Begin();
+				//{
+				//	for (Layer* layer : m_LayerStack)
+				//		layer->OnImGuiRender();
+				//}
+				//
+				//ImGui::Begin("Window Options");
+				//ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
+				//ImGui::End();
+				//
+				//m_ImGuiLayer->End();
 			}
 			//glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
 			m_Window->OnUpdate();

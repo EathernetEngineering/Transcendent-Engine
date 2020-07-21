@@ -39,7 +39,7 @@ namespace TE {
 		TE_CORE_INFO("Creating Window: {0} ({1}, {2})", std::string(m_WindowData.Title.begin(), m_WindowData.Title.end()), m_WindowData.Width, m_WindowData.Height);
 
 		m_pWindow = CreateWindow(wcex.lpszClassName, m_WindowData.Title.c_str(), WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
-									CW_USEDEFAULT, WndRect.left - WndRect.right, WndRect.bottom - WndRect.top,
+									CW_USEDEFAULT, m_WindowData.Width, m_WindowData.Height,
 									nullptr, nullptr, HINST_THISCOMPONANT, this);
 
 		hr = m_pWindow ? S_OK : E_FAIL;
@@ -153,7 +153,38 @@ namespace TE {
 	}
 
 	void DirectX12Window::OnResize(UINT Width, UINT Height) {
+		HRESULT rs = S_OK;
+		WaitForGpu();
 
+		if (m_PipelineData.CommandQueue && m_PipelineData.Fence && m_PipelineData.FenceEvent)
+		{
+			rs = m_PipelineData.CommandAllocator->Reset();
+			if (FAILED(rs)) {
+				HandleError("Failed to reset command allocator");
+				return;
+			}
+			rs = m_PipelineData.CommandList->Release();
+			if (FAILED(rs)) {
+				HandleError("Failed to release command list");
+				return;
+			}
+			for (UINT i = 0u; i < m_PipelineData.BufferSize; i++) {
+				rs = m_PipelineData.RenderTargets[i]->Release();
+				if (FAILED(rs)) {
+					HandleError("Failed to release render target " + i);
+					return;
+				}
+			}
+
+			m_PipelineData.FrameIndex = 0u;
+
+			rs = m_PipelineData.SwapChain->ResizeBuffers(m_PipelineData.BufferSize, Width, Height, DXGI_FORMAT_R8G8B8A8_UNORM, 0u);
+
+			if (FAILED(rs)) {
+				HandleError("Failed to resize buffers");
+				return;
+			}
+		}
 	}
 
 	void DirectX12Window::OnRender() {
@@ -305,5 +336,33 @@ namespace TE {
 		}
 
 		*HardwareAdapter = Adapter.Detach();
+	}
+
+	void DirectX12Window::FlushGpu() {
+		for (UINT i = 0; i < m_PipelineData.BufferSize; i++) {
+			UINT64 fenceValue = ++m_PipelineData.FenceValue;
+			m_PipelineData.CommandQueue->Signal(m_PipelineData.Fence.Get(), fenceValue);
+			if (m_PipelineData.Fence->GetCompletedValue() < fenceValue) {
+				m_PipelineData.Fence->SetEventOnCompletion(fenceValue, m_PipelineData.FenceEvent);
+				WaitForSingleObject(m_PipelineData.FenceEvent, INFINITE);
+			}
+		}
+
+		m_PipelineData.FrameIndex = 0;
+	}
+
+	void DirectX12Window::WaitForGpu() noexcept {
+		if (m_PipelineData.CommandQueue && m_PipelineData.Fence && m_PipelineData.FenceEvent) {
+			
+			UINT64 fenceValue = m_PipelineData.FenceValue;
+
+			if (SUCCEEDED(m_PipelineData.CommandQueue->Signal(m_PipelineData.Fence.Get(), fenceValue))) {
+				if (SUCCEEDED(m_PipelineData.Fence->SetEventOnCompletion(fenceValue, m_PipelineData.FenceEvent))) {
+					WaitForSingleObjectEx(m_PipelineData.FenceEvent, INFINITE, FALSE);
+
+					m_PipelineData.FenceValue++;
+				}
+			}
+		}
 	}
 }

@@ -22,6 +22,7 @@ IncludeDir["GLAD"] = "Transcendent-Engine/vendor/glad/include"
 IncludeDir["ImGui"] = "Transcendent-Engine/vendor/imgui"
 IncludeDir["glm"] = "Transcendent-Engine/vendor/glm"
 IncludeDir["stb"] = "Transcendent-Engine/vendor/stb"
+IncludeDir["TranscendentEntity"] = "Transcendent-Engine/vendor/Transcendent-Entity/Transcendent-Entity/include"
 
 group "Dependencies"
 	include "Transcendent-Engine/vendor/glfw"
@@ -50,7 +51,8 @@ project "Transcendent-Engine"
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/stb/**.h",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl"
+		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/Transcendent-Entity/Transcendent-Entity/**.h"
 	}
 
 	defines
@@ -67,7 +69,8 @@ project "Transcendent-Engine"
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb}"
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.TranscendentEntity}"
 	}
 
 	links

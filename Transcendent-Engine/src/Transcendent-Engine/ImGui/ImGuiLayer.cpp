@@ -51,7 +51,8 @@ namespace TE {
 #ifdef TE_PLATFORM_WINDOWS
 		DirectX12Window* window = static_cast<DirectX12Window*>(&app.GetWindow());
 		ImGui_ImplWin32_Init(window->GetNativeWindow());
-		ImGui_ImplDX12_Init(window->m_PipelineData.Device.Get(), 2u, DXGI_FORMAT_R8G8B8A8_UNORM, window->m_PipelineData.RtvHeap->GetCPUDescriptorHandleForHeapStart(), window->m_PipelineData.RtvHeap->GetGPUDescriptorHandleForHeapStart());
+		ImGui_ImplDX12_Init(window->m_PipelineData.Device.Get(), 2u, DXGI_FORMAT_R8G8B8A8_UNORM, window->m_PipelineData.RtvHeap->GetCPUDescriptorHandleForHeapStart(),
+									window->m_PipelineData.RtvHeap->GetGPUDescriptorHandleForHeapStart());
 #else
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
