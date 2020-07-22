@@ -17,4 +17,4 @@
 	branch = docking
 [submodule "Transcendent-Engine/vendor/Transcendent-Entity"]
 	path = Transcendent-Engine/vendor/Transcendent-Entity
-	url = git@github.com:sammyboy0110/Transcendent-Entity
+	url = https://github.com/sammyboy0110/Transcendent-Entity
