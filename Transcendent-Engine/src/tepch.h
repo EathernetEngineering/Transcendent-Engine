@@ -15,7 +15,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "Transcendent-Engine/core/Log.h"
+#include "Transcendent-Engine/core/core.h"
 
 #ifdef TE_PLATFORM_WINDOWS
 		#include <Windows.h>

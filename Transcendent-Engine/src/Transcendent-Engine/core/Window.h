@@ -7,13 +7,14 @@ namespace TE {
 	struct WindowProps
 	{
 		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
+		uint32_t Width, Height;
+		bool VSync;
 
 		WindowProps(std::string Title = "Transcendent Engine",
-						unsigned int Width = 1280u,
-						unsigned int Height = 720u)
-			: Title(Title), Width(Width), Height(Height)
+						uint32_t Width = 1280u,
+						uint32_t Height = 720u,
+						bool VSync = true)
+			: Title(Title), Width(Width), Height(Height), VSync(VSync)
 		{
 		}
 	};
@@ -28,14 +29,14 @@ namespace TE {
 
 		virtual void OnUpdate() = 0;
 
-		virtual unsigned int GetWidth(void) const = 0;
-		virtual unsigned int GetHeight(void) const = 0;
+		virtual uint32_t GetWidth(void) const = 0;
+		virtual uint32_t GetHeight(void) const = 0;
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enableed) = 0;
 		virtual bool IsVSync(void) const = 0;
 
-		virtual void* GetNativeWindow() const = 0;
+		inline virtual void* GetNativeWindow(void) const = 0;
 
 		static Scope<Window> Create(const WindowProps& props = WindowProps());
 	};

@@ -67,7 +67,8 @@ project "Transcendent-Engine"
 		"%{IncludeDir.GLAD}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb}"
+		"%{IncludeDir.stb}",
+		"C:/VulkanSDK/1.2.154.1/Include/"
 	}
 
 	links
@@ -75,7 +76,8 @@ project "Transcendent-Engine"
 		"GLFW",
 		"GLAD",
 		"ImGui",
-		"opengl32.lib"
+		"opengl32.lib",
+		"C:/VulkanSDK/1.2.154.1/Lib/vulkan-1.lib"
 	}
 
 	filter "system:windows"

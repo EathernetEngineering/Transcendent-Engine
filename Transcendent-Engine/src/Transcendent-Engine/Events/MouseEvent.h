@@ -2,6 +2,8 @@
 
 #include "Transcendent-Engine/Events/Event.h"
 
+#include "Transcendent-Engine/core/MouseCodes.h"
+
 namespace TE {
 
 	class MouseMovedEvent : public Event

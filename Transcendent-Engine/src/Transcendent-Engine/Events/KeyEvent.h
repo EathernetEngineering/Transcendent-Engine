@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Transcendent-Engine/Events/Event.h"
+#include <Transcendent-Engine/Events/Event.h>
+
+#include <Transcendent-Engine/core/KeyCodes.h>
 
 namespace TE {
 

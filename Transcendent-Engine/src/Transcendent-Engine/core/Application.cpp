@@ -12,22 +12,25 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-uint64_t memalloc;
-uint64_t memfree;
-uint64_t memattime() { return memalloc - memfree; }
+namespace MemoryAllocInfo {
+	size_t memalloc = 0;
+	size_t memfree = 0;
+	size_t memattime() { return memalloc - memfree; }
+}
 
-void* operator new(size_t size) {
+_NODISCARD _Ret_notnull_ _Post_writable_byte_size_(size) _VCRT_ALLOCATOR
+void* __CRTDECL operator new(size_t size) {
 
-	memalloc += size;
+	MemoryAllocInfo::memalloc += size;
 
 	return malloc(size);
 }
 
 void operator delete(void* memory, size_t size) {
-
-memfree -= size;
-
-free(memory);
+	
+	MemoryAllocInfo::memfree -= size;
+	
+	return free(memory);
 }
 
 namespace TE {
@@ -42,14 +45,14 @@ namespace TE {
 		m_Window->SetEventCallback(TE_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
-		ShaderLibrary::Init();
+		//ShaderLibrary::Init();
 
-		m_ImGuiLayer = new ImGuiLayer();
-		PushOverlay(m_ImGuiLayer);
+		//m_ImGuiLayer = new ImGuiLayer();
+		//PushOverlay(m_ImGuiLayer);
 
 		#if defined _DEBUG
-			m_DebugLayer = new DebugLayer("Debug");
-			PushLayer(m_DebugLayer);
+			//m_DebugLayer = new DebugLayer("Debug");
+			//PushLayer(m_DebugLayer);
 		#endif
 
 		Renderer2D::Init();
@@ -82,8 +85,16 @@ namespace TE {
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e) {
-
-		TE_CORE_WARN("Allocated {0} bytes of memory", memalloc);
+		if (MemoryAllocInfo::memalloc <= (1024u))
+			TE_CORE_WARN("Allocated {0} B of memory on the heap during runtime.", MemoryAllocInfo::memalloc);
+		else if (MemoryAllocInfo::memalloc <= (1024u * 1024u))
+			TE_CORE_WARN("Allocated {0} KB of memory on the heap during runtime.", (float)(MemoryAllocInfo::memalloc) / (1024.0f));
+		else if (MemoryAllocInfo::memalloc <= (1024u * 1024u * 1024u))
+			TE_CORE_WARN("Allocated {0} MB of memory on the heap during runtime.", (float)(MemoryAllocInfo::memalloc) / (1024.0f * 1024.0f));
+		else if (MemoryAllocInfo::memalloc > (1024u * 1024u * 1024u))
+			TE_CORE_WARN("Allocated {0} GB of memory on the heap during runtime.", (float)(MemoryAllocInfo::memalloc) / (1024.0f * 1024.0f * 1024.0f));
+		else
+			TE_CORE_WARN("Allocated {0} B of memory on the heap during runtime.", MemoryAllocInfo::memalloc);
 
 		m_Running = false;
 		return true;
@@ -97,7 +108,7 @@ namespace TE {
 			return false;
 		}
 
-		glViewport(0, 0, e.GetWidth(), e.GetHeight());
+		//glViewport(0, 0, e.GetWidth(), e.GetHeight());
 
 		m_Minimized = false;
 		return true;
@@ -107,7 +118,6 @@ namespace TE {
 	void Application::Run() {
 
 		glm::vec4 color(0.0f, 0.0f, 0.0f, 1.0f);
-		bool clearColourWindowOpen;
 		while (m_Running)
 		{
 			RenderCommand::SetClearColor(color);
@@ -119,19 +129,19 @@ namespace TE {
 						layer->OnUpdate();
 				}
 
-				m_ImGuiLayer->Begin();
-				{
-					for (Layer* layer : m_LayerStack)
-						layer->OnImGuiRender();
-				}
+				//m_ImGuiLayer->Begin();
+				//{
+				//	for (Layer* layer : m_LayerStack)
+				//		layer->OnImGuiRender();
+				//}
+				//
+				//ImGui::Begin("Window Options");
+				//ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
+				//ImGui::End();
 
-				ImGui::Begin("Window Options");
-				ImGui::ColorEdit3("Clear colour", glm::value_ptr(color));
-				ImGui::End();
-
-				m_ImGuiLayer->End();
+				//m_ImGuiLayer->End();
 			}
-			glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
+			//glfwSwapBuffers((GLFWwindow*)m_Window->GetNativeWindow());
 			m_Window->OnUpdate();
 		}
 	}

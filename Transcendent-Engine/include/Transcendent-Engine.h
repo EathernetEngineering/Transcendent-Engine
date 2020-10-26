@@ -11,8 +11,8 @@
 
 #include "Transcendent-Engine/ImGui/ImGuiLayer.h"
 
-#include "Platfrom/OpenGL/OpenGLShader.h"
-#include "Platfrom/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 /* Renderer */
 #include "Transcendent-Engine/Renderer/FrameBuffer.h"

@@ -1,5 +1,5 @@
 #include "tepch.h"
-#include "Platfrom/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 #include <fstream>
 
@@ -10,29 +10,18 @@
 namespace TE {
 
 	OpenGLShader::OpenGLShader(const std::string& Filepath, const std::string& Name) 
-		: Shader(Filepath, Name), m_Filepath(Filepath), m_Name(Name), m_Instance(this),
-		  m_VertexSource("INVALID!"), m_FragmentSource("INVALID!")
+		: m_Name(Name), m_ID((uint32_t)-1)
 	{
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name) 
-		: Shader(VertexSource, FragmentSource, Name), m_Filepath("INVALID!"), m_Name(Name), m_Instance(this),
-		  m_VertexSource(VertexSource), m_FragmentSource(FragmentSource)
+	OpenGLShader::OpenGLShader(const ShaderSource& Source, const std::string& Name) 
+		: m_Name(Name), m_ID((uint32_t)-1)
 	{
 	}
 
 	OpenGLShader::~OpenGLShader() {
 
 		glDeleteProgram(m_ID);
-	}
-
-	void OpenGLShader::Create() {
-		if (m_Filepath != "INVALID!")
-			m_ID = this->CompileShader(this->ParseShader(m_Filepath));
-		else if (m_VertexSource != "INVALID!" && m_FragmentSource != "INVALID!")
-			m_ID = this->CompileShader(m_VertexSource, m_FragmentSource);
-		else
-			TE_CORE_ASSERT(false, "Shader filepath or source not provided!");
 	}
 
 	void OpenGLShader::Bind() {
@@ -45,40 +34,7 @@ namespace TE {
 		glUseProgram(0u);
 	}
 
-	Shader::ShaderSource OpenGLShader::ParseShader(const std::string& Filepath) {
-
-		enum class ShaderType
-		{
-			NONE = -1,
-			VERTEX = 0,
-			FRAGMENT = 1
-		};
-
-		std::basic_fstream<char, std::char_traits<char>> stream(Filepath, std::ios_base::in);
-		std::string line;
-		std::stringstream ss[2];
-		ShaderType type = ShaderType::NONE;
-
-		while (getline(stream, line)) {
-
-			if ((line.find("#shader vertex") != std::string::npos) || (line.find("#type vertex") != std::string::npos))
-				type = ShaderType::VERTEX;
-			else if ((line.find("#shader fragment") != std::string::npos) || (line.find("#type fragment") != std::string::npos) ||
-				(line.find("#shader pixel") != std::string::npos) || (line.find("#type pixel") != std::string::npos))
-				type = ShaderType::FRAGMENT;
-			else
-				ss[(int)type] << line << std::endl;
-		}
-
-		return { ss[0].str(), ss[1].str() };
-	}
-
-	GLuint OpenGLShader::CompileShader(const ShaderSource& Source) {
-
-		return this->CompileShader(Source.Vertex, Source.Fragment);
-	}
-
-	GLuint OpenGLShader::CompileShader(const std::string& VertexSource, const std::string& FragmentSource) {
+	uint32_t OpenGLShader::CompileShader(const ShaderSource& Source) {
 
 		GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 		GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -87,7 +43,7 @@ namespace TE {
 		int InfoLogLength;
 
 		
-		char const* VertexSourcePointer = VertexSource.c_str();
+		char const* VertexSourcePointer = Source.Vertex.c_str();
 		glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 		glCompileShader(VertexShaderID);
 		
@@ -102,7 +58,7 @@ namespace TE {
 		else TE_CORE_INFO("Compiled vertex shader");
 
 		
-		char const* FragmentSourcePointer = FragmentSource.c_str();
+		char const* FragmentSourcePointer = Source.Fragment.c_str();
 		glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 		glCompileShader(FragmentShaderID);
 
@@ -146,8 +102,8 @@ namespace TE {
 
 	GLuint OpenGLShader::GetUniformLocation(const std::string& Name) {
 
-		if (m_UniformLocations.find(Name) != m_UniformLocations.end())
-			return m_UniformLocations[Name];
+		if (m_UniformLocationCache.find(Name) != m_UniformLocationCache.end())
+			return m_UniformLocationCache[Name];
 
 		int location = glad_glGetUniformLocation(m_ID, Name.c_str());
 		if (location == -1) {
@@ -155,16 +111,10 @@ namespace TE {
 			return INT_MAX;
 		}
 
-		m_UniformLocations[Name] = location;
+		m_UniformLocationCache[Name] = location;
 
 		return location;
 	}
-
-	void OpenGLShader::SetUniform() {
-
-		TE_CORE_ASSERT(false, "Data must be provided to template")
-	}
-
 	
 	void OpenGLShader::SetUniform(const std::string& Name, int i0) {
 

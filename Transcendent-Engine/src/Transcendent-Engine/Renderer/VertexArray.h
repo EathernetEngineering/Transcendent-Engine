@@ -111,7 +111,10 @@ namespace TE {
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 
-		static VertexBuffer* Create(float* vertices, uint32_t size);
+		virtual void SetData(void* Data, size_t size) = 0;
+
+		static Ref<VertexBuffer> Create(float* vertices, size_t size);
+		static Ref<VertexBuffer> Create(size_t size);
 	};
 
 	class IndexBuffer
@@ -124,7 +127,7 @@ namespace TE {
 
 		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(uint32_t* indices, uint32_t size);
+		static Ref<IndexBuffer> Create(uint32_t* indices, size_t count);
 	};
 
 	class VertexArray
@@ -135,11 +138,11 @@ namespace TE {
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) = 0;
-		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) = 0;
+		virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) = 0;
+		virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) = 0;
 
-		virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const = 0;
-		virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const = 0;
+		virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const = 0;
+		virtual const Ref<IndexBuffer>& GetIndexBuffer() const = 0;
 
 		
 		static Ref<VertexArray> Create();

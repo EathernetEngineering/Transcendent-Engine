@@ -1,5 +1,5 @@
 #include "tepch.h"
-#include "Platfrom/OpenGL/OpenGLWindow.h"
+#include "Platform/OpenGL/OpenGLWindow.h"
 
 #include "Transcendent-Engine/core/Input.h"
 #include "Transcendent-Engine/Events/KeyEvent.h"
@@ -104,7 +104,7 @@ namespace TE {
 			}
 			});
 
-		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, uint32_t keycode) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
 			KeyTypedEvent event(static_cast<KeyCode>(keycode));

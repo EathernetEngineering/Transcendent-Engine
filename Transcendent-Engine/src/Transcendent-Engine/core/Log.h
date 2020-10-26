@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Transcendent-Engine/core/core.h"
-
+// Ignore compiler warnings raised by extenal headers
+#pragma warning(push, 0)
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
+#pragma warning(pop)
 
 namespace TE {
+
 	class Log
 	{
 	public:
@@ -17,6 +19,7 @@ namespace TE {
 		static Ref<spdlog::logger> s_CoreLogger;
 		static Ref<spdlog::logger> s_ClientLogger;
 	};
+
 }
 
 // Core log macros

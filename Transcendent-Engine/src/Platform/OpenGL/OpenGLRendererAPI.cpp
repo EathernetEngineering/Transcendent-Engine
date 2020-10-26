@@ -1,5 +1,5 @@
 #include "tepch.h"
-#include "Platfrom/OpenGL/OpenGLRendererAPI.h"
+#include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
@@ -8,10 +8,10 @@
 namespace TE {
 
 	void OpenGLMessageCallback(
-		unsigned source,
-		unsigned type,
-		unsigned id,
-		unsigned severity,
+		uint32_t source,
+		uint32_t type,
+		uint32_t id,
+		uint32_t severity,
 		int length,
 		const char* message,
 		const void* userParam)
@@ -56,9 +56,21 @@ namespace TE {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
+	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, size_t Count)
 	{
-		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		size_t count;
+		Count == 0 ? count = vertexArray->GetIndexBuffer()->GetCount() : count = Count;
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void OpenGLRendererAPI::BeginScene()
+	{
+
+	}
+
+	void OpenGLRendererAPI::EndScene()
+	{
+
 	}
 }

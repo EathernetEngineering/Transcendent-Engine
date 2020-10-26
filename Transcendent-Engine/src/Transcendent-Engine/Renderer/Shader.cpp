@@ -3,132 +3,61 @@
 
 #include "Transcendent-Engine/Renderer/RendererAPI.h"
 
-#include "Platfrom/OpenGL/OpenGLShader.h"
+#include "Platform/OpenGL/OpenGLShader.h"
+#include "Platform/Vulkan/VulkanShader.h"
 
 namespace TE {
 
-	Shader::Shader(const std::string& Filepath, const std::string& Name) 
-		: m_Instance(this), m_ShaderAPI(nullptr), m_Filepath(Filepath), m_Name(Name)
-	{
-	}
+	Scope<Shader> Shader::Create(const std::string& Filepath, const std::string& Name) {
 
-	Shader::Shader(const std::string& VertexSource, const std::string& FragmentSource, const std::string& Name) 
-		: m_Instance(this), m_ShaderAPI(nullptr), m_VertexSource(VertexSource), 
-			m_FragmentSource(FragmentSource), m_Name(Name)
-	{
-	}
-
-	Shader::~Shader() {
-
-		delete m_ShaderAPI;
-	}
-
-	void Shader::Create() {
-
-		switch (RendererAPI::GetAPI()) {
-
-		case RendererAPI::API::OpenGL:
+		switch (RendererAPI::GetAPI())
 		{
-			if (m_Filepath != "")
-				m_ShaderAPI = new OpenGLShader(m_Filepath, m_Name);
+			case RendererAPI::API::NONE:       TE_CORE_ASSERT(false, "RendererAPI::NONE is currently not supported!"); return nullptr;
+			case RendererAPI::API::DirectX12:  TE_CORE_ASSERT(false, "RendererAPI::DirectX12 is currently not supported!"); return nullptr;
+			case RendererAPI::API::OpenGL:     return CreateScope<VulkanShader>(Filepath, Name);
+			case RendererAPI::API::Vulkan:     return CreateScope<VulkanShader>(Filepath, Name);
+			default:                           TE_CORE_ASSERT(false, "Unknown Renderer API"); return nullptr;
+		}
+	}
+	
+	Scope<Shader> Shader::Create(const ShaderSource& Source, const std::string& Name) {
+
+		switch (RendererAPI::GetAPI())
+		{
+			case RendererAPI::API::NONE:       TE_CORE_ASSERT(false, "RendererAPI::NONE is currently not supported!"); return nullptr;
+			case RendererAPI::API::DirectX12:  TE_CORE_ASSERT(false, "RendererAPI::DirectX12 is currently not supported!"); return nullptr;
+			case RendererAPI::API::OpenGL:     return CreateScope<VulkanShader>(Source, Name);
+			case RendererAPI::API::Vulkan:     return CreateScope<VulkanShader>(Source, Name);
+			default:                           TE_CORE_ASSERT(false, "Unknown Renderer API"); return nullptr;
+		}
+	}
+
+	ShaderSource Shader::ParseShader(const std::string& Filepath) {
+
+		enum class ShaderType
+		{
+			NONE = -1,
+			VERTEX = 0,
+			FRAGMENT = 1
+		};
+
+		std::basic_fstream<char, std::char_traits<char>> stream(Filepath, std::ios_base::in);
+		std::string line;
+		std::stringstream ss[2];
+		ShaderType type = ShaderType::NONE;
+
+		while (getline(stream, line)) {
+
+			if ((line.find("#shader vertex") != std::string::npos) || (line.find("#type vertex") != std::string::npos))
+				type = ShaderType::VERTEX;
+			else if ((line.find("#shader fragment") != std::string::npos) || (line.find("#type fragment") != std::string::npos) ||
+				(line.find("#shader pixel") != std::string::npos) || (line.find("#type pixel") != std::string::npos))
+				type = ShaderType::FRAGMENT;
 			else
-				m_ShaderAPI = new OpenGLShader(m_VertexSource, m_FragmentSource, m_Name);
-
-			m_ShaderAPI->Create();
+				ss[(int)type] << line << std::endl;
 		}
-		break;
 
-		default:
-			TE_CORE_ASSERT(false, "Unknown Renderer API");
-		}
+		return { ss[0].str(), ss[1].str() };
 	}
 
-	void Shader::Bind() {
-
-		m_ShaderAPI->Bind();
-	}
-
-	void Shader::Unbind() {
-
-		m_ShaderAPI->Unbind();
-	}
-
-	Shader::ShaderSource Shader::ParseShader(const std::string& Filepath) {
-
-		return m_ShaderAPI->ParseShader(Filepath);
-	}
-
-	GLuint Shader::CompileShader(const ShaderSource& Source) {
-
-		return m_ShaderAPI->CompileShader(Source);
-	}
-
-	GLuint Shader::CompileShader(const std::string& VertexSource, const std::string& FragmentSource) {
-
-		return m_ShaderAPI->CompileShader(VertexSource, FragmentSource);
-	}
-
-	GLuint Shader::GetUniformLocation(std::string& Name) {
-
-		return m_ShaderAPI->GetUniformLocation(Name);
-	}
-	
-	void Shader::SetUniform() {
-
-		TE_CORE_ASSERT(false, "Data must be provided to template")
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, int i0) {
-
-		m_ShaderAPI->SetUniform(Name, i0);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, int i0, int i1) {
-
-		m_ShaderAPI->SetUniform(Name, i0, i1);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, int i0, int i1, int i2) {
-
-		m_ShaderAPI->SetUniform(Name, i0, i1, i2);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, int i0, int i1, int i2, int i3) {
-
-		m_ShaderAPI->SetUniform(Name, i0, i1, i2, i3);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, float i0) {
-
-		m_ShaderAPI->SetUniform(Name, i0);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, float i0, float i1) {
-
-		m_ShaderAPI->SetUniform(Name, i0, i1);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, float i0, float i1, float i2) {
-
-		m_ShaderAPI->SetUniform(Name, i0, i1, i2);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, float i0, float i1, float i2, float i3) {
-
-		m_ShaderAPI->SetUniform(Name, i0, i1, i2, i3);
-	}
-
-	
-	void Shader::SetUniform(const std::string& Name, glm::mat4 i0) {
-
-		m_ShaderAPI->SetUniform(Name, i0);
-	}
 }

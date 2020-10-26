@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Transcendent-Engine/Renderer/RendererAPI.h"
-#include "Platfrom/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace TE {
 
@@ -28,8 +28,8 @@ namespace TE {
 			s_RendererAPI->Clear();
 		}
 
-		inline static void DrawIndexed(const Ref<VertexArray> VertexArray) {
-			s_RendererAPI->DrawIndexed(VertexArray);
+		inline static void DrawIndexed(const Ref<VertexArray> VertexArray, size_t count = 0) {
+			s_RendererAPI->DrawIndexed(VertexArray, count);
 		}
 
 	private:

@@ -15,14 +15,14 @@ namespace TE {
 
 		void OnUpdate() override;
 
-		inline unsigned int GetWidth(void) const override { return m_Data.Width; }
-		inline unsigned int GetHeight(void) const override { return m_Data.Height; }
+		inline uint32_t GetWidth(void) const override { return m_Data.Width; }
+		inline uint32_t GetHeight(void) const override { return m_Data.Height; }
 
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync(void) const override;
 
-		inline virtual void* GetNativeWindow() const { return m_Window; }
+		inline virtual void* GetNativeWindow(void) const override { return m_Window; }
 
 	private:
 		virtual void Init(const WindowProps& props);
@@ -34,7 +34,7 @@ namespace TE {
 		struct WindowData
 		{
 			std::string Title;
-			unsigned int Width, Height;
+			uint32_t Width, Height;
 			bool VSync;
 
 			EventCallbackFn EventCallback;

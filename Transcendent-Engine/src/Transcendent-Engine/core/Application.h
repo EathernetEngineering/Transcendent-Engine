@@ -16,9 +16,11 @@
 
 #include "imgui.h"
 
-extern uint64_t memalloc;
-extern uint64_t memfree;
-extern uint64_t memattime();
+namespace MemoryAllocInfo {
+	extern size_t memalloc;
+	extern size_t memfree;
+	extern size_t memattime();
+}
 
 int main(int argc, char** argv);
 
@@ -43,7 +45,7 @@ namespace TE {
 		inline Window& GetWindow()       { return *m_Window;   }
 
 	private:
-		std::shared_ptr<Window> m_Window = nullptr;
+		Ref<Window> m_Window = nullptr;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		bool m_Minimized = false;
